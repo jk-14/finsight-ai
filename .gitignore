@@ -1,3 +1,8 @@
+# Project-specific — do not commit
+finsight-ai-plan.md
+CLAUDE.md
+checks.md
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -27,6 +32,10 @@ yarn-error.log*
 
 # local env files
 .env*.local
+!.env.local.example
+
+# Drizzle migrations output
+/drizzle/
 
 # vercel
 .vercel
