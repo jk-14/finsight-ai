@@ -73,10 +73,10 @@ export default function LandingPage() {
             FinSight AI
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" render={<Link href="/login" />}>
+            <Button variant="ghost" size="sm" render={<Link href="/login" />} nativeButton={false}>
               Sign in
             </Button>
-            <Button size="sm" render={<Link href="/register" />}>
+            <Button size="sm" render={<Link href="/register" />} nativeButton={false}>
               Get started
             </Button>
           </div>
@@ -99,7 +99,7 @@ export default function LandingPage() {
             minimal, fast dashboard.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button size="lg" render={<Link href="/login" />} className="gap-2">
+            <Button size="lg" render={<Link href="/login" />} nativeButton={false} className="gap-2">
               Try the demo <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -112,6 +112,7 @@ export default function LandingPage() {
                   rel="noopener noreferrer"
                 />
               }
+              nativeButton={false}
               className="gap-2"
             >
               <GitBranch className="h-4 w-4" /> View source
@@ -187,7 +188,7 @@ export default function LandingPage() {
               Log in with the demo account to explore a pre-seeded portfolio with
               AAPL, MSFT, NVDA and TSLA — quotes and AI insights included.
             </p>
-            <Button size="lg" render={<Link href="/login" />} className="gap-2">
+            <Button size="lg" render={<Link href="/login" />} nativeButton={false} className="gap-2">
               Open demo dashboard <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
