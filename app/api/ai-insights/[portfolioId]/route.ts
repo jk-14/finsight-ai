@@ -24,11 +24,12 @@ async function getQuotesCached(tickers: string[]): Promise<Quote[]> {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { portfolioId: string } }
+  { params }: { params: Promise<{ portfolioId: string }> }
 ) {
   try {
+    const { portfolioId } = await params;
     const payload = await requireAuth(req);
-    const portfolio = await getPortfolioWithHoldings(params.portfolioId);
+    const portfolio = await getPortfolioWithHoldings(portfolioId);
 
     if (!portfolio) {
       return NextResponse.json(
@@ -41,7 +42,7 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const insight = await getLatestInsight(params.portfolioId);
+    const insight = await getLatestInsight(portfolioId);
 
     if (!insight) {
       return NextResponse.json({ data: { insight: null } });
@@ -60,11 +61,12 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { portfolioId: string } }
+  { params }: { params: Promise<{ portfolioId: string }> }
 ) {
   try {
+    const { portfolioId } = await params;
     const payload = await requireAuth(req);
-    const portfolio = await getPortfolioWithHoldings(params.portfolioId);
+    const portfolio = await getPortfolioWithHoldings(portfolioId);
 
     if (!portfolio) {
       return NextResponse.json(
@@ -88,7 +90,7 @@ export async function POST(
     const quotes = await getQuotesCached(tickers);
 
     const content = await generatePortfolioInsight(portfolio.holdings, quotes);
-    const saved = await saveInsight({ portfolioId: params.portfolioId, content });
+    const saved = await saveInsight({ portfolioId, content });
 
     return NextResponse.json({
       data: {

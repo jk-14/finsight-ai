@@ -8,11 +8,12 @@ import {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const payload = await requireAuth(req);
-    const portfolio = await getPortfolioWithHoldings(params.id);
+    const portfolio = await getPortfolioWithHoldings(id);
 
     if (!portfolio) {
       return NextResponse.json(
@@ -34,11 +35,12 @@ export async function GET(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const payload = await requireAuth(req);
-    const portfolio = await getPortfolioById(params.id);
+    const portfolio = await getPortfolioById(id);
 
     if (!portfolio) {
       return NextResponse.json(
@@ -51,7 +53,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    await deletePortfolio(params.id);
+    await deletePortfolio(id);
     return NextResponse.json({ data: { success: true } });
   } catch {
     console.error("[DELETE /api/portfolio/[id]]");

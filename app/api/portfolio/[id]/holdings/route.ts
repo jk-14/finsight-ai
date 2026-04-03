@@ -4,11 +4,12 @@ import { getPortfolioById, addHolding } from "@/lib/db/queries";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const payload = await requireAuth(req);
-    const portfolio = await getPortfolioById(params.id);
+    const portfolio = await getPortfolioById(id);
 
     if (!portfolio) {
       return NextResponse.json(
@@ -43,7 +44,7 @@ export async function POST(
     }
 
     const holding = await addHolding({
-      portfolioId: params.id,
+      portfolioId: id,
       ticker: ticker.trim().toUpperCase(),
       shares,
       avgCost,

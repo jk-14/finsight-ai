@@ -123,10 +123,16 @@ export default function PortfolioDetailPage() {
           </p>
         </div>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
-              <Trash2 className="h-4 w-4" />
-            </Button>
+          <DialogTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-destructive"
+              />
+            }
+          >
+            <Trash2 className="h-4 w-4" />
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

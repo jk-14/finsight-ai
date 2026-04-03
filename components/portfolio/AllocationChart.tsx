@@ -78,8 +78,10 @@ export const AllocationChart = ({ holdings, quotes }: Props) => {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value: number) => [
-                `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${((value / total) * 100).toFixed(1)}%)`,
+              formatter={(value) => [
+                typeof value === "number"
+                  ? `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${((value / total) * 100).toFixed(1)}%)`
+                  : "-",
                 "Value",
               ]}
               contentStyle={{

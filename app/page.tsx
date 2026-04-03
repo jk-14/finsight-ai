@@ -6,7 +6,7 @@ import {
   ShieldCheck,
   Zap,
   ArrowRight,
-  Github,
+  GitBranch,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,11 +73,11 @@ export default function LandingPage() {
             FinSight AI
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/login">Sign in</Link>
+            <Button variant="ghost" size="sm" render={<Link href="/login" />}>
+              Sign in
             </Button>
-            <Button size="sm" asChild>
-              <Link href="/register">Get started</Link>
+            <Button size="sm" render={<Link href="/register" />}>
+              Get started
             </Button>
           </div>
         </div>
@@ -99,20 +99,22 @@ export default function LandingPage() {
             minimal, fast dashboard.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/login" className="gap-2">
-                Try the demo <ArrowRight className="h-4 w-4" />
-              </Link>
+            <Button size="lg" render={<Link href="/login" />} className="gap-2">
+              Try the demo <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a
-                href="https://github.com/jk-14/finsight-ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gap-2"
-              >
-                <Github className="h-4 w-4" /> View source
-              </a>
+            <Button
+              size="lg"
+              variant="outline"
+              render={
+                <a
+                  href="https://github.com/jk-14/finsight-ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+              className="gap-2"
+            >
+              <GitBranch className="h-4 w-4" /> View source
             </Button>
           </div>
 
@@ -185,10 +187,8 @@ export default function LandingPage() {
               Log in with the demo account to explore a pre-seeded portfolio with
               AAPL, MSFT, NVDA and TSLA — quotes and AI insights included.
             </p>
-            <Button size="lg" asChild>
-              <Link href="/login" className="gap-2">
-                Open demo dashboard <ArrowRight className="h-4 w-4" />
-              </Link>
+            <Button size="lg" render={<Link href="/login" />} className="gap-2">
+              Open demo dashboard <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         </section>

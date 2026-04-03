@@ -112,8 +112,10 @@ export const PerformanceChart = ({ holdings, quotes }: Props) => {
               width={70}
             />
             <Tooltip
-              formatter={(value: number) => [
-                `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+              formatter={(value) => [
+                typeof value === "number"
+                  ? `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                  : "-",
                 "Portfolio value",
               ]}
               contentStyle={{
