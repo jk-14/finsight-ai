@@ -1,100 +1,223 @@
-import Image from "next/image";
+import Link from "next/link";
+import {
+  TrendingUp,
+  Sparkles,
+  BarChart3,
+  ShieldCheck,
+  Zap,
+  ArrowRight,
+  Github,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function Home() {
+const FEATURES = [
+  {
+    icon: TrendingUp,
+    title: "Live Stock Quotes",
+    description:
+      "Real-time prices via Alpha Vantage with Redis caching — fast responses without burning your API quota.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI-Powered Insights",
+    description:
+      "Claude analyzes your holdings and delivers a concise 3-paragraph portfolio assessment on demand.",
+  },
+  {
+    icon: BarChart3,
+    title: "P&L Tracking",
+    description:
+      "Instant unrealized gain/loss per position and across your entire portfolio, updated every 60 seconds.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Secure Multi-Tenancy",
+    description:
+      "Stateless JWT auth — every request is verified, every portfolio is user-scoped. No session state.",
+  },
+  {
+    icon: Zap,
+    title: "Serverless-Ready",
+    description:
+      "Deployed on Vercel with Neon Postgres and Upstash Redis. Zero cold-start penalty on data reads.",
+  },
+  {
+    icon: BarChart3,
+    title: "Interactive Charts",
+    description:
+      "Allocation pie chart and 30-day area performance chart built with Recharts — fully responsive.",
+  },
+];
+
+const STACK = [
+  { label: "Next.js 14", note: "App Router + API routes" },
+  { label: "TypeScript", note: "Strict mode throughout" },
+  { label: "Drizzle ORM", note: "Type-safe queries on Neon Postgres" },
+  { label: "Upstash Redis", note: "60s quote cache" },
+  { label: "React Query", note: "Stale-while-revalidate" },
+  { label: "Claude API", note: "claude-sonnet-4-20250514" },
+  { label: "shadcn/ui", note: "Accessible component primitives" },
+  { label: "Recharts", note: "Portfolio visualizations" },
+];
+
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Nav */}
+      <header className="border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-base">
+            <TrendingUp className="h-4 w-4 text-primary" />
+            FinSight AI
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login">Sign in</Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/register">Get started</Link>
+            </Button>
+          </div>
         </div>
+      </header>
+
+      <main>
+        {/* Hero */}
+        <section className="max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
+          <Badge variant="secondary" className="mb-6 text-xs font-medium">
+            Portfolio project · Senior Full Stack
+          </Badge>
+          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-tight">
+            Your portfolio dashboard,{" "}
+            <span className="text-primary">powered by AI</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+            Track stock holdings with live quotes, visualize allocation, and get
+            Claude&apos;s AI commentary on your portfolio health — all in one
+            minimal, fast dashboard.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button size="lg" asChild>
+              <Link href="/login" className="gap-2">
+                Try the demo <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <a
+                href="https://github.com/jk-14/finsight-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gap-2"
+              >
+                <Github className="h-4 w-4" /> View source
+              </a>
+            </Button>
+          </div>
+
+          {/* Demo credentials callout */}
+          <div className="mt-8 inline-flex items-center gap-3 bg-muted/50 border border-border rounded-lg px-5 py-3 text-sm">
+            <span className="text-muted-foreground">Demo login:</span>
+            <code className="font-mono text-foreground">demo@finsight.ai</code>
+            <span className="text-muted-foreground">/</span>
+            <code className="font-mono text-foreground">Demo1234!</code>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="border-t border-border bg-card/30">
+          <div className="max-w-6xl mx-auto px-6 py-20">
+            <h2 className="text-2xl font-bold text-center mb-2">
+              What&apos;s inside
+            </h2>
+            <p className="text-muted-foreground text-center mb-12 text-sm">
+              Every feature is a deliberate architectural decision.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {FEATURES.map(({ icon: Icon, title, description }) => (
+                <Card key={title} className="bg-card border-border">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-md bg-primary/10">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <CardTitle className="text-sm font-semibold">
+                        {title}
+                      </CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Tech stack */}
+        <section className="max-w-6xl mx-auto px-6 py-20">
+          <h2 className="text-2xl font-bold text-center mb-2">Tech stack</h2>
+          <p className="text-muted-foreground text-center mb-12 text-sm">
+            Chosen for production-relevance, not just familiarity.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {STACK.map(({ label, note }) => (
+              <div
+                key={label}
+                className="border border-border rounded-lg p-4 bg-card hover:border-primary/40 transition-colors"
+              >
+                <p className="font-semibold text-sm">{label}</p>
+                <p className="text-xs text-muted-foreground mt-1">{note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="border-t border-border bg-card/30">
+          <div className="max-w-6xl mx-auto px-6 py-20 text-center">
+            <h2 className="text-3xl font-bold mb-4">See it live</h2>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-sm">
+              Log in with the demo account to explore a pre-seeded portfolio with
+              AAPL, MSFT, NVDA and TSLA — quotes and AI insights included.
+            </p>
+            <Button size="lg" asChild>
+              <Link href="/login" className="gap-2">
+                Open demo dashboard <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="border-t border-border">
+        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <TrendingUp className="h-3 w-3" />
+            FinSight AI — portfolio project by Jatin
+          </div>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/jk-14/finsight-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
+            <Link href="/login" className="hover:text-foreground transition-colors">
+              Sign in
+            </Link>
+            <Link href="/register" className="hover:text-foreground transition-colors">
+              Register
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   );
