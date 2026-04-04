@@ -96,9 +96,9 @@ export default function LandingPage() {
       <main>
         {/* Hero */}
         <section className="max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
-          <Badge variant="secondary" className="mb-6 text-xs font-medium">
+          {/* <Badge variant="secondary" className="mb-6 text-xs font-medium">
             Portfolio project · Senior Full Stack
-          </Badge>
+          </Badge> */}
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-tight">
             Your portfolio dashboard, <span className="text-primary">powered by AI</span>
           </h1>

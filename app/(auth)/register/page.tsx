@@ -53,6 +53,15 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-sm shadow-card-md">
         <CardHeader className="px-8 pt-8 pb-2 space-y-1">
+          <Link href="/" className="flex items-center gap-2 mb-1 w-fit">
+            <img
+              src="/icons/finsight-mark-24.svg"
+              alt="FinSight AI"
+              width={24}
+              height={24}
+            />
+            <span className="font-bold text-sm tracking-tight">FinSight AI</span>
+          </Link>
           <CardTitle className="text-2xl font-bold">Create account</CardTitle>
           <CardDescription>
             Start tracking your portfolio with AI insights
@@ -107,6 +116,12 @@ export default function RegisterPage() {
                 Sign in
               </Link>
             </p>
+            <Link
+              href="/"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to home
+            </Link>
           </CardFooter>
         </form>
       </Card>
