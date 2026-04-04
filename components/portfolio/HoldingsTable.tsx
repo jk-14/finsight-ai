@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -119,12 +118,9 @@ export const HoldingsTable = ({
                 {quotesLoading ? (
                   <Skeleton className="h-4 w-20 ml-auto" />
                 ) : (
-                  <Badge
-                    variant={isPositive ? "default" : "destructive"}
-                    className="ml-auto font-mono text-xs"
-                  >
+                  <span className={`ml-auto font-mono ${isPositive ? "badge-gain" : "badge-loss"}`}>
                     {formatPercent(pnlPercent)}
-                  </Badge>
+                  </span>
                 )}
               </TableCell>
               <TableCell>

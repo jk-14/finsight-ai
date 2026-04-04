@@ -1,16 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { AuthUser } from "@/types";
+import { AuthUser, Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
-interface TopNavProps {
-  portfolioName?: string;
-}
+export const TopNav = () => {
+  const pathname = usePathname();
 
-export const TopNav = ({ portfolioName }: TopNavProps) => {
-  const { data, isLoading } = useQuery<{ data: { user: AuthUser } }>({
+  const { data: meData, isLoading: meLoading } = useQuery<{ data: { user: AuthUser } }>({
     queryKey: ["me"],
     queryFn: () => {
       const token = localStorage.getItem("token");
@@ -18,13 +17,26 @@ export const TopNav = ({ portfolioName }: TopNavProps) => {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json());
     },
-    staleTime: 5 * 60 * 1000, // user info is stable — only fetch once every 5 min
+    staleTime: 5 * 60 * 1000,
   });
 
-  const user = data?.data?.user;
+  // Reuse the portfolios cache populated by the Sidebar — no extra fetch.
+  const { data: portfoliosData } = useQuery<{ data: Portfolio[] }>({
+    queryKey: ["portfolios"],
+    enabled: false, // only read from cache; Sidebar is responsible for fetching
+  });
+
+  const user = meData?.data?.user;
+
+  // Derive breadcrumb from the current path.
+  const portfolioIdMatch = pathname.match(/^\/portfolio\/([^/]+)/);
+  const portfolioId = portfolioIdMatch?.[1];
+  const portfolioName = portfolioId
+    ? (portfoliosData?.data ?? []).find((p) => p.id === portfolioId)?.name
+    : undefined;
 
   return (
-    <header className="h-14 border-b border-border flex items-center justify-between px-6 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+    <header className="h-14 flex items-center justify-between px-6 bg-background sticky top-0 z-10">
       <div className="flex items-center gap-2 text-sm">
         <span className="text-muted-foreground">Dashboard</span>
         {portfolioName && (
@@ -36,7 +48,7 @@ export const TopNav = ({ portfolioName }: TopNavProps) => {
       </div>
 
       <div className="flex items-center gap-3">
-        {isLoading ? (
+        {meLoading ? (
           <Skeleton className="h-5 w-32" />
         ) : user ? (
           <>

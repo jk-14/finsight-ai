@@ -59,6 +59,9 @@
     /* ── Border radius ── */
     --radius: 0.5rem;
 
+    /* ── Button radius (single source of truth for all button shapes) ── */
+    --btn-radius: 0.5rem;
+
     /* ── Sidebar (for shadcn sidebar component) ── */
     --sidebar-background: 212 52% 24%;   /* #1E3A5F — navy sidebar */
     --sidebar-foreground: 210 60% 90%;   /* light blue-white text */
@@ -238,5 +241,65 @@
   .nav-item-active {
     @apply bg-sidebar-accent text-sidebar-foreground
            font-semibold;
+  }
+
+  /* ─────────────────────────────────────────────
+     SEMANTIC BUTTON CLASSES
+     Use these when you need button styles outside
+     the React Button component (e.g. plain <button>
+     or <a> styled as a button). All shapes are
+     controlled by --btn-radius so one variable
+     governs every button on the platform.
+     ───────────────────────────────────────────── */
+
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-1.5
+           rounded-[var(--btn-radius)] border border-transparent
+           px-3 py-1.5 text-sm font-medium whitespace-nowrap
+           transition-all duration-150 outline-none select-none
+           focus-visible:ring-2 focus-visible:ring-ring/50
+           disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  /* Primary — deep navy fill */
+  .btn-primary {
+    @apply btn-base
+           bg-primary text-primary-foreground
+           hover:bg-primary/85 active:bg-primary/75;
+  }
+
+  /* Secondary — muted surface */
+  .btn-secondary {
+    @apply btn-base
+           bg-secondary text-secondary-foreground
+           hover:bg-secondary/70 active:bg-secondary/60;
+  }
+
+  /* Outline — bordered, transparent bg */
+  .btn-outline {
+    @apply btn-base
+           border-border bg-transparent text-foreground
+           hover:bg-muted active:bg-muted/80;
+  }
+
+  /* Ghost — no border, no bg until hover */
+  .btn-ghost {
+    @apply btn-base
+           text-foreground
+           hover:bg-muted active:bg-muted/80;
+  }
+
+  /* Error / Destructive — red tint */
+  .btn-error {
+    @apply btn-base
+           bg-destructive/10 text-destructive border-destructive/20
+           hover:bg-destructive/20 active:bg-destructive/25;
+  }
+
+  /* Accent — corporate blue */
+  .btn-accent {
+    @apply btn-base
+           bg-accent text-accent-foreground
+           hover:bg-accent/85 active:bg-accent/75;
   }
 }

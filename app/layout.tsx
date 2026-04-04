@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: "FinSight AI — Portfolio Dashboard",
   description:
     "Multi-tenant financial portfolio dashboard with live stock quotes and AI-generated insights.",
+  icons: {
+    icon: [
+      { url: "/icons/finsight-mark-16.svg", sizes: "16x16", type: "image/svg+xml" },
+      { url: "/icons/finsight-mark-32.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/icons/finsight-mark-48.svg", sizes: "48x48", type: "image/svg+xml" },
+    ],
+    apple: { url: "/icons/finsight-mark-96.svg", sizes: "96x96", type: "image/svg+xml" },
+  },
 };
 
 export default function RootLayout({

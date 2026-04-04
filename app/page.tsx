@@ -1,12 +1,12 @@
 import Link from "next/link";
 import {
-  TrendingUp,
   Sparkles,
   BarChart3,
   ShieldCheck,
   Zap,
   ArrowRight,
   GitBranch,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -68,8 +68,8 @@ export default function LandingPage() {
       {/* Nav */}
       <header className="border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-base">
-            <TrendingUp className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-2.5 font-bold text-base">
+            <img src="/icons/finsight-mark-24.svg" alt="FinSight AI" width={24} height={24} />
             FinSight AI
           </div>
           <div className="flex items-center gap-2">
@@ -199,7 +199,7 @@ export default function LandingPage() {
       <footer className="border-t border-border">
         <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
-            <TrendingUp className="h-3 w-3" />
+            <img src="/icons/finsight-mark-16.svg" alt="FinSight AI" width={16} height={16} />
             FinSight AI — portfolio project by Jatin
           </div>
           <div className="flex items-center gap-4">

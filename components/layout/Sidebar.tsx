@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { BarChart3, LogOut, PlusCircle, TrendingUp } from "lucide-react";
+import { BarChart3, LogOut, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,8 +35,8 @@ export const Sidebar = () => {
   return (
     <aside className="flex flex-col w-60 shrink-0 border-r border-border bg-card h-screen sticky top-0">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-5 py-5 border-b border-border">
-        <TrendingUp className="h-5 w-5 text-primary" />
+      <div className="flex items-center gap-2.5 h-14 px-5 border-b border-border shrink-0">
+        <img src="/icons/finsight-mark-32.svg" alt="FinSight AI" width={32} height={32} />
         <span className="font-bold text-base tracking-tight">FinSight AI</span>
       </div>
 

@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { PortfolioWithHoldings, Quote } from "@/types";
 import { PnLSummaryCard } from "@/components/portfolio/PnLSummaryCard";
 import { HoldingsTable } from "@/components/portfolio/HoldingsTable";
@@ -40,6 +40,8 @@ export default function PortfolioDetailPage() {
   const queryClient = useQueryClient();
   const [deleting, setDeleting] = useState<string | null>(null);
   const [deletingPortfolio, setDeletingPortfolio] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
 
   const { data: portfolioData, isLoading: portfolioLoading } = useQuery<{
     data: PortfolioWithHoldings;
@@ -157,13 +159,42 @@ export default function PortfolioDetailPage() {
         loading={quotesLoading}
       />
 
-      {/* Add holding form */}
-      <AddHoldingForm
-        portfolioId={id}
-        onSuccess={() => queryClient.invalidateQueries({ queryKey: ["portfolio", id] })}
-      />
+      <hr className="border-border" />
 
-      {/* Holdings table */}
+      {/* Your holdings */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Your holdings</h2>
+        <Button size="sm" className="gap-1.5" onClick={() => setAddOpen(true)}>
+          <Plus className="h-4 w-4" />
+          Add holding
+        </Button>
+      </div>
+
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Add holding</DialogTitle>
+            <DialogDescription>
+              Enter the ticker, number of shares, and your average cost per share.
+            </DialogDescription>
+          </DialogHeader>
+          <AddHoldingForm
+            portfolioId={id}
+            onSuccess={() => queryClient.invalidateQueries({ queryKey: ["portfolio", id] })}
+            onClose={() => setAddOpen(false)}
+            onLoadingChange={setAddLoading}
+          />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAddOpen(false)} disabled={addLoading}>
+              Cancel
+            </Button>
+            <Button type="submit" form="add-holding-form" disabled={addLoading}>
+              {addLoading ? "Adding…" : "Add holding"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <HoldingsTable
         holdings={portfolio.holdings}
         quotes={quotes}
@@ -171,6 +202,8 @@ export default function PortfolioDetailPage() {
         onDelete={handleDeleteHolding}
         deleting={deleting}
       />
+
+      <hr className="border-border" />
 
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
