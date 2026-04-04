@@ -67,6 +67,15 @@ export const PerformanceChart = ({ holdings, quotes }: Props) => {
   const isPositive = last >= first;
   const color = isPositive ? "#10b981" : "#f43f5e";
 
+  const values = data.map((d) => d.value);
+  const minVal = Math.min(...values);
+  const maxVal = Math.max(...values);
+  // Pad by 15% of the delta so the line never sits flush against the axis edges.
+  // Fall back to 1% of the max value when all data points are identical.
+  const delta = maxVal - minVal || maxVal * 0.01;
+  const yMin = Math.max(0, minVal - delta * 0.15);
+  const yMax = maxVal + delta * 0.15;
+
   if (holdings.length === 0 || quotes.length === 0) {
     return (
       <Card>
@@ -103,6 +112,7 @@ export const PerformanceChart = ({ holdings, quotes }: Props) => {
               interval={6}
             />
             <YAxis
+              domain={[yMin, yMax]}
               tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
               tickLine={false}
               axisLine={false}

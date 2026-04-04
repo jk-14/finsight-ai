@@ -17,7 +17,7 @@ const FEATURES = [
     icon: TrendingUp,
     title: "Live Stock Quotes",
     description:
-      "Real-time prices via Alpha Vantage with Redis caching — fast responses without burning your API quota.",
+      "Real-time prices via Finnhub (60 req/min free tier) with Redis caching — fast responses and no daily quota concerns.",
   },
   {
     icon: Sparkles,
@@ -52,14 +52,14 @@ const FEATURES = [
 ];
 
 const STACK = [
-  { label: "Next.js 14", note: "App Router + API routes" },
+  { label: "Next.js 16", note: "App Router + API routes" },
   { label: "TypeScript", note: "Strict mode throughout" },
   { label: "Drizzle ORM", note: "Type-safe queries on Neon Postgres" },
-  { label: "Upstash Redis", note: "60s quote cache" },
+  { label: "Upstash Redis", note: "Fresh + stale quote cache" },
+  { label: "Finnhub API", note: "60 req/min real-time quotes" },
   { label: "React Query", note: "Stale-while-revalidate" },
   { label: "Claude API", note: "claude-sonnet-4-20250514" },
   { label: "shadcn/ui", note: "Accessible component primitives" },
-  { label: "Recharts", note: "Portfolio visualizations" },
 ];
 
 export default function LandingPage() {

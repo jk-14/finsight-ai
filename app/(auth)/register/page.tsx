@@ -34,7 +34,7 @@ export default function RegisterPage() {
       }
 
       localStorage.setItem("token", json.data.token);
-      router.push("/");
+      router.push("/dashboard");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -44,14 +44,14 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="space-y-1">
+      <Card className="w-full max-w-sm shadow-card-md">
+        <CardHeader className="px-8 pt-8 pb-2 space-y-1">
           <CardTitle className="text-2xl font-bold">Create account</CardTitle>
           <CardDescription>Start tracking your portfolio with AI insights</CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+          <CardContent className="px-8 pb-2 space-y-4">
             {error && (
               <p className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
                 {error}
@@ -88,13 +88,13 @@ export default function RegisterPage() {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col gap-3">
+          <CardFooter className="px-8 pb-8 pt-2 flex-col gap-3 border-0 bg-transparent">
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Creating account…" : "Create account"}
             </Button>
             <p className="text-sm text-muted-foreground text-center">
               Already have an account?{" "}
-              <Link href="/login" className="text-primary hover:underline">
+              <Link href="/login" className="text-primary hover:underline font-medium">
                 Sign in
               </Link>
             </p>

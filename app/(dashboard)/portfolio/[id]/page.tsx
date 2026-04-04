@@ -81,7 +81,7 @@ export default function PortfolioDetailPage() {
     try {
       await authFetch(`/api/portfolio/${id}`, { method: "DELETE" });
       await queryClient.invalidateQueries({ queryKey: ["portfolios"] });
-      router.push("/");
+      router.push("/dashboard");
     } finally {
       setDeletingPortfolio(false);
     }
@@ -105,7 +105,7 @@ export default function PortfolioDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-3">
         <p className="text-muted-foreground">Portfolio not found.</p>
-        <Button variant="outline" onClick={() => router.push("/")}>
+        <Button variant="outline" onClick={() => router.push("/dashboard")}>
           Go home
         </Button>
       </div>

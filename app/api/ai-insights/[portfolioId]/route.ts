@@ -5,22 +5,8 @@ import {
   getLatestInsight,
   saveInsight,
 } from "@/lib/db/queries";
-import { fetchQuoteFromAlphaVantage } from "@/lib/alpha-vantage";
-import { redis, QUOTE_TTL, quoteKey } from "@/lib/redis";
+import { getQuotesCached } from "@/lib/quotes";
 import { generatePortfolioInsight } from "@/lib/claude";
-import { Quote } from "@/types";
-
-async function getQuotesCached(tickers: string[]): Promise<Quote[]> {
-  return Promise.all(
-    tickers.map(async (ticker): Promise<Quote> => {
-      const cached = await redis.get<Quote>(quoteKey(ticker));
-      if (cached) return cached;
-      const quote = await fetchQuoteFromAlphaVantage(ticker);
-      await redis.set(quoteKey(ticker), quote, { ex: QUOTE_TTL });
-      return quote;
-    })
-  );
-}
 
 export async function GET(
   req: NextRequest,

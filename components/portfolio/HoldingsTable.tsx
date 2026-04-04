@@ -1,8 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -41,6 +50,7 @@ export const HoldingsTable = ({
   onDelete,
   deleting,
 }: Props) => {
+  const [pendingDelete, setPendingDelete] = useState<Holding | null>(null);
   const quoteMap = new Map(quotes.map((q) => [q.ticker, q]));
 
   if (holdings.length === 0) {
@@ -52,6 +62,7 @@ export const HoldingsTable = ({
   }
 
   return (
+    <>
     <Table>
       <TableHeader>
         <TableRow>
@@ -121,7 +132,7 @@ export const HoldingsTable = ({
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                  onClick={() => onDelete(holding.id)}
+                  onClick={() => setPendingDelete(holding)}
                   disabled={deleting === holding.id}
                 >
                   <Trash2 className="h-4 w-4" />
@@ -132,5 +143,37 @@ export const HoldingsTable = ({
         })}
       </TableBody>
     </Table>
+
+    <Dialog
+      open={!!pendingDelete}
+      onOpenChange={(open) => { if (!open) setPendingDelete(null); }}
+    >
+      <DialogContent showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>Remove holding</DialogTitle>
+          <DialogDescription>
+            Remove <span className="font-medium text-foreground">{pendingDelete?.ticker}</span> from your portfolio? This cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setPendingDelete(null)}>
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            disabled={deleting === pendingDelete?.id}
+            onClick={() => {
+              if (pendingDelete) {
+                onDelete(pendingDelete.id);
+                setPendingDelete(null);
+              }
+            }}
+          >
+            {deleting === pendingDelete?.id ? "Removing…" : "Proceed"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };

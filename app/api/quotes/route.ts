@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
-import { redis, QUOTE_TTL, quoteKey } from "@/lib/redis";
-import { fetchQuoteFromAlphaVantage } from "@/lib/alpha-vantage";
-import { Quote } from "@/types";
+import { getQuotesCached } from "@/lib/quotes";
 
 export async function GET(req: NextRequest) {
   try {
@@ -30,19 +28,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Cache-first: check Redis for each ticker, fall back to Alpha Vantage on miss.
-    // Interview talking point: 60s TTL keeps us within Alpha Vantage's 25 calls/day free limit.
-    const quotes = await Promise.all(
-      tickers.map(async (ticker): Promise<Quote> => {
-        const cached = await redis.get<Quote>(quoteKey(ticker));
-        if (cached) return cached;
-
-        const quote = await fetchQuoteFromAlphaVantage(ticker);
-        await redis.set(quoteKey(ticker), quote, { ex: QUOTE_TTL });
-        return quote;
-      })
-    );
-
+    const quotes = await getQuotesCached(tickers);
     return NextResponse.json({ data: quotes });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
