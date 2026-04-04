@@ -1,13 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthUser, Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
 export const TopNav = () => {
   const pathname = usePathname();
+  const queryClient = useQueryClient();
 
   const { data: meData, isLoading: meLoading } = useQuery<{ data: { user: AuthUser } }>({
     queryKey: ["me"],
@@ -20,11 +21,8 @@ export const TopNav = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  // Reuse the portfolios cache populated by the Sidebar — no extra fetch.
-  const { data: portfoliosData } = useQuery<{ data: Portfolio[] }>({
-    queryKey: ["portfolios"],
-    enabled: false, // only read from cache; Sidebar is responsible for fetching
-  });
+  // Read portfolios directly from the cache — Sidebar owns the fetch.
+  const portfoliosData = queryClient.getQueryData<{ data: Portfolio[] }>(["portfolios"]);
 
   const user = meData?.data?.user;
 

@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, RefreshCw, Trash2 } from "lucide-react";
 import { PortfolioWithHoldings, Quote } from "@/types";
 import { PnLSummaryCard } from "@/components/portfolio/PnLSummaryCard";
 import { HoldingsTable } from "@/components/portfolio/HoldingsTable";
@@ -54,7 +54,7 @@ export default function PortfolioDetailPage() {
   const portfolio = portfolioData?.data;
   const tickers = portfolio?.holdings.map((h) => h.ticker) ?? [];
 
-  const { data: quotesData, isLoading: quotesLoading } = useQuery<{
+  const { data: quotesData, isFetching: quotesLoading } = useQuery<{
     data: Quote[];
   }>({
     queryKey: ["quotes", tickers.join(",")],
@@ -124,6 +124,17 @@ export default function PortfolioDetailPage() {
             {portfolio.holdings.length} holding{portfolio.holdings.length !== 1 ? "s" : ""}
           </p>
         </div>
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground hover:text-foreground"
+            disabled={quotesLoading}
+            onClick={() => queryClient.refetchQueries({ queryKey: ["quotes", tickers.join(",")] })}
+            title="Refresh quotes"
+          >
+            <RefreshCw className={`h-4 w-4 ${quotesLoading ? "animate-spin" : ""}`} />
+          </Button>
         <Dialog>
           <DialogTrigger
             render={
@@ -150,6 +161,7 @@ export default function PortfolioDetailPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* P&L Summary */}
