@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { TickerSearch } from "@/components/portfolio/TickerSearch";
 
 interface Props {
   portfolioId: string;
@@ -10,7 +11,12 @@ interface Props {
   onLoadingChange?: (loading: boolean) => void;
 }
 
-export const AddHoldingForm = ({ portfolioId, onSuccess, onClose, onLoadingChange }: Props) => {
+export const AddHoldingForm = ({
+  portfolioId,
+  onSuccess,
+  onClose,
+  onLoadingChange,
+}: Props) => {
   const [ticker, setTicker] = useState("");
   const [shares, setShares] = useState("");
   const [avgCost, setAvgCost] = useState("");
@@ -67,21 +73,14 @@ export const AddHoldingForm = ({ portfolioId, onSuccess, onClose, onLoadingChang
           {error}
         </p>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="space-y-2">
-          <label htmlFor="ticker" className="text-sm font-medium">
-            Ticker
-          </label>
-          <Input
-            id="ticker"
-            placeholder="AAPL"
-            value={ticker}
-            onChange={(e) => setTicker(e.target.value.toUpperCase())}
-            className="uppercase"
-            required
-            maxLength={10}
-          />
-        </div>
+      <div className="space-y-2">
+        <label htmlFor="ticker" className="text-sm font-medium">
+          Ticker
+        </label>
+        <TickerSearch value={ticker} onSelect={setTicker} />
+      </div>
+
+      <div className="grid grid-cols-2 gap-5">
         <div className="space-y-2">
           <label htmlFor="shares" className="text-sm font-medium">
             Shares
