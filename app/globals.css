@@ -2,57 +2,241 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────
+   ARCTIC SLATE — Light Theme
+   A clean, institutional financial dashboard theme.
+   Primary: Deep Navy (#1E3A5F)
+   Accent:  Corporate Blue (#1E6FCC)
+   Surface: Cool Slate (#F7F9FC)
+   ───────────────────────────────────────────── */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* ── Page background ── */
+    --background: 213 33% 97%;           /* #F7F9FC — cool slate page bg */
+    --foreground: 212 52% 24%;           /* #1E3A5F — deep navy text */
+
+    /* ── Card / surface ── */
+    --card: 0 0% 100%;                   /* #FFFFFF — pure white cards */
+    --card-foreground: 212 52% 24%;      /* #1E3A5F */
+
+    /* ── Popover ── */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --popover-foreground: 212 52% 24%;
+
+    /* ── Primary action (navy) ── */
+    --primary: 212 52% 24%;              /* #1E3A5F */
+    --primary-foreground: 210 100% 97%; /* #EFF6FF */
+
+    /* ── Secondary / muted surface ── */
+    --secondary: 213 33% 95%;            /* #EDF1F7 */
+    --secondary-foreground: 212 30% 40%;
+
+    /* ── Muted labels & placeholders ── */
+    --muted: 213 25% 93%;                /* #E8EDF4 */
+    --muted-foreground: 213 15% 45%;     /* #64748B */
+
+    /* ── Accent (corporate blue) ── */
+    --accent: 213 73% 46%;               /* #1E6FCC */
+    --accent-foreground: 0 0% 100%;      /* white text on accent */
+
+    /* ── Destructive / red ── */
+    --destructive: 0 72% 51%;            /* #DC2626 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* ── Borders ── */
+    --border: 213 25% 89%;               /* #E2E8F0 */
+    --input: 213 25% 89%;
+    --ring: 213 73% 46%;                 /* accent blue for focus rings */
+
+    /* ── Chart colors ── */
+    --chart-1: 213 73% 46%;              /* #1E6FCC — corporate blue */
+    --chart-2: 212 52% 24%;              /* #1E3A5F — deep navy */
+    --chart-3: 142 70% 39%;              /* #16A34A — gain green */
+    --chart-4: 0 72% 51%;               /* #DC2626 — loss red */
+    --chart-5: 213 33% 75%;             /* #9DB4CE — soft blue */
+
+    /* ── Border radius ── */
     --radius: 0.5rem;
+
+    /* ── Sidebar (for shadcn sidebar component) ── */
+    --sidebar-background: 212 52% 24%;   /* #1E3A5F — navy sidebar */
+    --sidebar-foreground: 210 60% 90%;   /* light blue-white text */
+    --sidebar-primary: 213 73% 46%;      /* #1E6FCC */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 212 45% 32%;       /* slightly lighter navy hover */
+    --sidebar-accent-foreground: 210 60% 95%;
+    --sidebar-border: 212 40% 30%;
+    --sidebar-ring: 213 73% 46%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 47.4% 11.2%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 47.4% 11.2%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
+    --background: 212 30% 10%;
+    --foreground: 210 60% 92%;
 
+    --card: 212 30% 13%;
+    --card-foreground: 210 60% 92%;
+
+    --popover: 212 30% 13%;
+    --popover-foreground: 210 60% 92%;
+
+    --primary: 213 73% 56%;
+    --primary-foreground: 212 52% 10%;
+
+    --secondary: 212 25% 18%;
+    --secondary-foreground: 210 40% 80%;
+
+    --muted: 212 20% 18%;
+    --muted-foreground: 213 15% 55%;
+
+    --accent: 213 73% 56%;
+    --accent-foreground: 212 52% 10%;
+
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 212 25% 20%;
+    --input: 212 25% 20%;
+    --ring: 213 73% 56%;
+
+    --chart-1: 213 73% 56%;
+    --chart-2: 213 40% 70%;
+    --chart-3: 142 60% 50%;
+    --chart-4: 0 62% 55%;
+    --chart-5: 213 25% 45%;
+
+    --sidebar-background: 212 35% 8%;
+    --sidebar-foreground: 210 50% 88%;
+    --sidebar-primary: 213 73% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 212 30% 14%;
+    --sidebar-accent-foreground: 210 50% 92%;
+    --sidebar-border: 212 30% 14%;
+    --sidebar-ring: 213 73% 56%;
+  }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Scrollbar styling (Webkit) ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground));
+  }
+}
+
+/* ─────────────────────────────────────────────
+   SEMANTIC UTILITY CLASSES
+   Financial dashboard-specific helpers
+   ───────────────────────────────────────────── */
+
+@layer components {
+
+  /* ── Gain / Loss indicators ── */
+  .text-gain {
+    @apply text-green-600 font-medium;
+  }
+
+  .text-loss {
+    @apply text-red-600 font-medium;
+  }
+
+  .badge-gain {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5
+           bg-green-50 text-green-700 text-xs font-medium
+           border border-green-200;
+  }
+
+  .badge-loss {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5
+           bg-red-50 text-red-700 text-xs font-medium
+           border border-red-200;
+  }
+
+  /* ── Metric card (KPI surface) ── */
+  .metric-card {
+    @apply bg-card rounded-lg border border-border p-4
+           flex flex-col gap-1
+           transition-shadow duration-150
+           hover:shadow-sm;
+  }
+
+  .metric-card-label {
+    @apply text-xs text-muted-foreground uppercase tracking-wide font-medium;
+  }
+
+  .metric-card-value {
+    @apply text-2xl font-semibold text-foreground tabular-nums;
+  }
+
+  .metric-card-sub {
+    @apply text-xs text-muted-foreground mt-0.5;
+  }
+
+  /* ── Stock ticker pill ── */
+  .ticker-pill {
+    @apply inline-flex items-center gap-1.5 rounded-md
+           bg-secondary px-2.5 py-1
+           text-xs font-mono font-medium text-foreground
+           border border-border;
+  }
+
+  /* ── AI insight card ── */
+  .ai-card {
+    @apply bg-card rounded-lg border border-border p-4
+           border-l-4 border-l-accent;
+  }
+
+  .ai-card-header {
+    @apply flex items-center gap-2 mb-2 text-xs font-medium
+           text-muted-foreground uppercase tracking-wider;
+  }
+
+  /* ── Section heading ── */
+  .section-heading {
+    @apply text-sm font-semibold text-foreground uppercase
+           tracking-widest mb-3;
+  }
+
+  /* ── Data table row hover ── */
+  .table-row-hover {
+    @apply hover:bg-secondary/60 transition-colors duration-100;
+  }
+
+  /* ── Nav item (sidebar) ── */
+  .nav-item {
+    @apply flex items-center gap-3 rounded-md px-3 py-2
+           text-sm font-medium
+           text-sidebar-foreground/70
+           hover:bg-sidebar-accent hover:text-sidebar-foreground
+           transition-colors duration-150 cursor-pointer;
+  }
+
+  .nav-item-active {
+    @apply bg-sidebar-accent text-sidebar-foreground
+           font-semibold;
   }
 }
