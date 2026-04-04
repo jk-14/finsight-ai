@@ -69,11 +69,21 @@ export default function LandingPage() {
       <header className="border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5 font-bold text-base">
-            <img src="/icons/finsight-mark-24.svg" alt="FinSight AI" width={24} height={24} />
+            <img
+              src="/icons/finsight-mark-24.svg"
+              alt="FinSight AI"
+              width={24}
+              height={24}
+            />
             FinSight AI
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" render={<Link href="/login" />} nativeButton={false}>
+            <Button
+              variant="ghost"
+              size="sm"
+              render={<Link href="/login" />}
+              nativeButton={false}
+            >
               Sign in
             </Button>
             <Button size="sm" render={<Link href="/register" />} nativeButton={false}>
@@ -90,16 +100,20 @@ export default function LandingPage() {
             Portfolio project · Senior Full Stack
           </Badge>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            Your portfolio dashboard,{" "}
-            <span className="text-primary">powered by AI</span>
+            Your portfolio dashboard, <span className="text-primary">powered by AI</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
             Track stock holdings with live quotes, visualize allocation, and get
-            Claude&apos;s AI commentary on your portfolio health — all in one
-            minimal, fast dashboard.
+            Claude&apos;s AI commentary on your portfolio health — all in one minimal,
+            fast dashboard.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button size="lg" render={<Link href="/login" />} nativeButton={false} className="gap-2">
+            <Button
+              size="lg"
+              render={<Link href="/login" />}
+              nativeButton={false}
+              className="gap-2"
+            >
               Try the demo <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -131,9 +145,7 @@ export default function LandingPage() {
         {/* Features */}
         <section className="border-t border-border bg-card/30">
           <div className="max-w-6xl mx-auto px-6 py-20">
-            <h2 className="text-2xl font-bold text-center mb-2">
-              What&apos;s inside
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-2">What&apos;s inside</h2>
             <p className="text-muted-foreground text-center mb-12 text-sm">
               Every feature is a deliberate architectural decision.
             </p>
@@ -145,9 +157,7 @@ export default function LandingPage() {
                       <div className="p-1.5 rounded-md bg-primary/10">
                         <Icon className="h-4 w-4 text-primary" />
                       </div>
-                      <CardTitle className="text-sm font-semibold">
-                        {title}
-                      </CardTitle>
+                      <CardTitle className="text-sm font-semibold">{title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -185,10 +195,15 @@ export default function LandingPage() {
           <div className="max-w-6xl mx-auto px-6 py-20 text-center">
             <h2 className="text-3xl font-bold mb-4">See it live</h2>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto text-sm">
-              Log in with the demo account to explore a pre-seeded portfolio with
-              AAPL, MSFT, NVDA and TSLA — quotes and AI insights included.
+              Log in with the demo account to explore a pre-seeded portfolio with AAPL,
+              MSFT, NVDA and TSLA — quotes and AI insights included.
             </p>
-            <Button size="lg" render={<Link href="/login" />} nativeButton={false} className="gap-2">
+            <Button
+              size="lg"
+              render={<Link href="/login" />}
+              nativeButton={false}
+              className="gap-2"
+            >
               Open demo dashboard <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -199,7 +214,12 @@ export default function LandingPage() {
       <footer className="border-t border-border">
         <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
-            <img src="/icons/finsight-mark-16.svg" alt="FinSight AI" width={16} height={16} />
+            <img
+              src="/icons/finsight-mark-16.svg"
+              alt="FinSight AI"
+              width={16}
+              height={16}
+            />
             FinSight AI — portfolio project by Jatin
           </div>
           <div className="flex items-center gap-4">

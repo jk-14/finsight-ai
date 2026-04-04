@@ -12,10 +12,7 @@ export async function POST(
     const portfolio = await getPortfolioById(id);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     if (portfolio.userId !== payload.userId) {
@@ -53,9 +50,6 @@ export async function POST(
     return NextResponse.json({ data: holding }, { status: 201 });
   } catch {
     console.error("[POST /api/portfolio/[id]/holdings]");
-    return NextResponse.json(
-      { error: "Failed to add holding" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to add holding" }, { status: 500 });
   }
 }

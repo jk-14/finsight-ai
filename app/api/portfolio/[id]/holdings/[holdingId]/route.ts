@@ -12,10 +12,7 @@ export async function DELETE(
     const portfolio = await getPortfolioById(id);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     if (portfolio.userId !== payload.userId) {
@@ -24,19 +21,13 @@ export async function DELETE(
 
     const holding = await getHoldingById(holdingId);
     if (!holding || holding.portfolioId !== id) {
-      return NextResponse.json(
-        { error: "Holding not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Holding not found" }, { status: 404 });
     }
 
     await deleteHolding(holdingId);
     return NextResponse.json({ data: { success: true } });
   } catch {
     console.error("[DELETE /api/portfolio/[id]/holdings/[holdingId]]");
-    return NextResponse.json(
-      { error: "Failed to delete holding" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to delete holding" }, { status: 500 });
   }
 }

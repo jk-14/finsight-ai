@@ -13,48 +13,48 @@
 @layer base {
   :root {
     /* ── Page background ── */
-    --background: 213 33% 97%;           /* #F7F9FC — cool slate page bg */
-    --foreground: 212 52% 24%;           /* #1E3A5F — deep navy text */
+    --background: 213 33% 97%; /* #F7F9FC — cool slate page bg */
+    --foreground: 212 52% 24%; /* #1E3A5F — deep navy text */
 
     /* ── Card / surface ── */
-    --card: 0 0% 100%;                   /* #FFFFFF — pure white cards */
-    --card-foreground: 212 52% 24%;      /* #1E3A5F */
+    --card: 0 0% 100%; /* #FFFFFF — pure white cards */
+    --card-foreground: 212 52% 24%; /* #1E3A5F */
 
     /* ── Popover ── */
     --popover: 0 0% 100%;
     --popover-foreground: 212 52% 24%;
 
     /* ── Primary action (navy) ── */
-    --primary: 212 52% 24%;              /* #1E3A5F */
+    --primary: 212 52% 24%; /* #1E3A5F */
     --primary-foreground: 210 100% 97%; /* #EFF6FF */
 
     /* ── Secondary / muted surface ── */
-    --secondary: 213 33% 95%;            /* #EDF1F7 */
+    --secondary: 213 33% 95%; /* #EDF1F7 */
     --secondary-foreground: 212 30% 40%;
 
     /* ── Muted labels & placeholders ── */
-    --muted: 213 25% 93%;                /* #E8EDF4 */
-    --muted-foreground: 213 15% 45%;     /* #64748B */
+    --muted: 213 25% 93%; /* #E8EDF4 */
+    --muted-foreground: 213 15% 45%; /* #64748B */
 
     /* ── Accent (corporate blue) ── */
-    --accent: 213 73% 46%;               /* #1E6FCC */
-    --accent-foreground: 0 0% 100%;      /* white text on accent */
+    --accent: 213 73% 46%; /* #1E6FCC */
+    --accent-foreground: 0 0% 100%; /* white text on accent */
 
     /* ── Destructive / red ── */
-    --destructive: 0 72% 51%;            /* #DC2626 */
+    --destructive: 0 72% 51%; /* #DC2626 */
     --destructive-foreground: 0 0% 100%;
 
     /* ── Borders ── */
-    --border: 213 25% 89%;               /* #E2E8F0 */
+    --border: 213 25% 89%; /* #E2E8F0 */
     --input: 213 25% 89%;
-    --ring: 213 73% 46%;                 /* accent blue for focus rings */
+    --ring: 213 73% 46%; /* accent blue for focus rings */
 
     /* ── Chart colors ── */
-    --chart-1: 213 73% 46%;              /* #1E6FCC — corporate blue */
-    --chart-2: 212 52% 24%;              /* #1E3A5F — deep navy */
-    --chart-3: 142 70% 39%;              /* #16A34A — gain green */
-    --chart-4: 0 72% 51%;               /* #DC2626 — loss red */
-    --chart-5: 213 33% 75%;             /* #9DB4CE — soft blue */
+    --chart-1: 213 73% 46%; /* #1E6FCC — corporate blue */
+    --chart-2: 212 52% 24%; /* #1E3A5F — deep navy */
+    --chart-3: 142 70% 39%; /* #16A34A — gain green */
+    --chart-4: 0 72% 51%; /* #DC2626 — loss red */
+    --chart-5: 213 33% 75%; /* #9DB4CE — soft blue */
 
     /* ── Border radius ── */
     --radius: 0.5rem;
@@ -63,11 +63,11 @@
     --btn-radius: 0.5rem;
 
     /* ── Sidebar (for shadcn sidebar component) ── */
-    --sidebar-background: 212 52% 24%;   /* #1E3A5F — navy sidebar */
-    --sidebar-foreground: 210 60% 90%;   /* light blue-white text */
-    --sidebar-primary: 213 73% 46%;      /* #1E6FCC */
+    --sidebar-background: 212 52% 24%; /* #1E3A5F — navy sidebar */
+    --sidebar-foreground: 210 60% 90%; /* light blue-white text */
+    --sidebar-primary: 213 73% 46%; /* #1E6FCC */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 212 45% 32%;       /* slightly lighter navy hover */
+    --sidebar-accent: 212 45% 32%; /* slightly lighter navy hover */
     --sidebar-accent-foreground: 210 60% 95%;
     --sidebar-border: 212 40% 30%;
     --sidebar-ring: 213 73% 46%;
@@ -126,7 +126,9 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -157,7 +159,6 @@
    ───────────────────────────────────────────── */
 
 @layer components {
-
   /* ── Gain / Loss indicators ── */
   .text-gain {
     @apply text-green-600 font-medium;

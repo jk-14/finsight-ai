@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Holding, Quote } from "@/types";
 
@@ -71,10 +64,7 @@ export const AllocationChart = ({ holdings, quotes }: Props) => {
               dataKey="value"
             >
               {data.map((_, index) => (
-                <Cell
-                  key={index}
-                  fill={COLORS[index % COLORS.length]}
-                />
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip

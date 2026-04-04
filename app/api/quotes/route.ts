@@ -36,9 +36,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     console.error("[GET /api/quotes]", message);
-    return NextResponse.json(
-      { error: "Failed to fetch quotes" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch quotes" }, { status: 500 });
   }
 }

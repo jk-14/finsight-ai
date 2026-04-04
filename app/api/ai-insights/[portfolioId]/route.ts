@@ -18,10 +18,7 @@ export async function GET(
     const portfolio = await getPortfolioWithHoldings(portfolioId);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     if (portfolio.userId !== payload.userId) {
@@ -55,10 +52,7 @@ export async function POST(
     const portfolio = await getPortfolioWithHoldings(portfolioId);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     if (portfolio.userId !== payload.userId) {
@@ -86,9 +80,6 @@ export async function POST(
     });
   } catch {
     console.error("[POST /api/ai-insights/[portfolioId]]");
-    return NextResponse.json(
-      { error: "Failed to generate insight" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to generate insight" }, { status: 500 });
   }
 }

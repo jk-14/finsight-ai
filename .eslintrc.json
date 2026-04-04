@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "next/typescript",
-    "prettier"
-  ],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
   "plugins": ["@typescript-eslint", "react-hooks"],
   "rules": {
     "no-console": ["error", { "allow": ["error"] }],

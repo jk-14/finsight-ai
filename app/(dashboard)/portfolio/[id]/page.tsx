@@ -58,8 +58,7 @@ export default function PortfolioDetailPage() {
     data: Quote[];
   }>({
     queryKey: ["quotes", tickers.join(",")],
-    queryFn: () =>
-      authFetch(`/api/quotes?tickers=${tickers.join(",")}`),
+    queryFn: () => authFetch(`/api/quotes?tickers=${tickers.join(",")}`),
     enabled: tickers.length > 0,
     refetchInterval: 60_000, // Re-fetch live quotes every 60s
   });
@@ -121,7 +120,8 @@ export default function PortfolioDetailPage() {
         <div>
           <h1 className="text-2xl font-bold">{portfolio.name}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            {portfolio.holdings.length} holding{portfolio.holdings.length !== 1 ? "s" : ""}
+            {portfolio.holdings.length} holding
+            {portfolio.holdings.length !== 1 ? "s" : ""}
           </p>
         </div>
         <div className="flex items-center gap-1">
@@ -130,37 +130,44 @@ export default function PortfolioDetailPage() {
             size="icon"
             className="text-muted-foreground hover:text-foreground"
             disabled={quotesLoading}
-            onClick={() => queryClient.refetchQueries({ queryKey: ["quotes", tickers.join(",")] })}
+            onClick={() =>
+              queryClient.refetchQueries({ queryKey: ["quotes", tickers.join(",")] })
+            }
             title="Refresh quotes"
           >
             <RefreshCw className={`h-4 w-4 ${quotesLoading ? "animate-spin" : ""}`} />
           </Button>
-        <Dialog>
-          <DialogTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-destructive"
-              />
-            }
-          >
-            <Trash2 className="h-4 w-4" />
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete portfolio</DialogTitle>
-              <DialogDescription>
-                This will permanently delete &ldquo;{portfolio.name}&rdquo; and all its holdings. This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="destructive" onClick={handleDeletePortfolio} disabled={deletingPortfolio}>
-                {deletingPortfolio ? "Deleting…" : "Delete portfolio"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          <Dialog>
+            <DialogTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-destructive"
+                />
+              }
+            >
+              <Trash2 className="h-4 w-4" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete portfolio</DialogTitle>
+                <DialogDescription>
+                  This will permanently delete &ldquo;{portfolio.name}&rdquo; and all its
+                  holdings. This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  variant="destructive"
+                  onClick={handleDeletePortfolio}
+                  disabled={deletingPortfolio}
+                >
+                  {deletingPortfolio ? "Deleting…" : "Delete portfolio"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -192,12 +199,18 @@ export default function PortfolioDetailPage() {
           </DialogHeader>
           <AddHoldingForm
             portfolioId={id}
-            onSuccess={() => queryClient.invalidateQueries({ queryKey: ["portfolio", id] })}
+            onSuccess={() =>
+              queryClient.invalidateQueries({ queryKey: ["portfolio", id] })
+            }
             onClose={() => setAddOpen(false)}
             onLoadingChange={setAddLoading}
           />
           <DialogFooter>
-            <Button variant="outline" onClick={() => setAddOpen(false)} disabled={addLoading}>
+            <Button
+              variant="outline"
+              onClick={() => setAddOpen(false)}
+              disabled={addLoading}
+            >
               Cancel
             </Button>
             <Button type="submit" form="add-holding-form" disabled={addLoading}>

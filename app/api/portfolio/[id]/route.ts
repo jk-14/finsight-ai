@@ -16,10 +16,7 @@ export async function GET(
     const portfolio = await getPortfolioWithHoldings(id);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     // Ensure the portfolio belongs to the authenticated user
@@ -43,10 +40,7 @@ export async function DELETE(
     const portfolio = await getPortfolioById(id);
 
     if (!portfolio) {
-      return NextResponse.json(
-        { error: "Portfolio not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
     }
 
     if (portfolio.userId !== payload.userId) {
@@ -57,9 +51,6 @@ export async function DELETE(
     return NextResponse.json({ data: { success: true } });
   } catch {
     console.error("[DELETE /api/portfolio/[id]]");
-    return NextResponse.json(
-      { error: "Failed to delete portfolio" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to delete portfolio" }, { status: 500 });
   }
 }

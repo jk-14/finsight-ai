@@ -12,13 +12,11 @@ interface Props {
  * In production this would be replaced with real historical data from a market data API.
  */
 function generateMockHistory(ticker: string): { value: number }[] {
-  const seed = ticker
-    .split("")
-    .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const seed = ticker.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
 
   let price = 100 + (seed % 400);
   return Array.from({ length: 30 }, (_, i) => {
-    const change = Math.sin((i + seed) * 0.7) * 3 + (Math.cos(i * 0.3 + seed) * 2);
+    const change = Math.sin((i + seed) * 0.7) * 3 + Math.cos(i * 0.3 + seed) * 2;
     price = Math.max(10, price + change);
     return { value: parseFloat(price.toFixed(2)) };
   });

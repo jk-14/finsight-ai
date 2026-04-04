@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,7 +54,9 @@ export default function RegisterPage() {
       <Card className="w-full max-w-sm shadow-card-md">
         <CardHeader className="px-8 pt-8 pb-2 space-y-1">
           <CardTitle className="text-2xl font-bold">Create account</CardTitle>
-          <CardDescription>Start tracking your portfolio with AI insights</CardDescription>
+          <CardDescription>
+            Start tracking your portfolio with AI insights
+          </CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>

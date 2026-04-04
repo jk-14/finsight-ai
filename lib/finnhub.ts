@@ -12,22 +12,20 @@ export class FinnhubRateLimitError extends Error {
 function getApiKey(): string {
   const key = process.env.FINNHUB_API_KEY;
   if (!key) {
-    throw new Error(
-      "FINNHUB_API_KEY is not set. Please add it to your .env.local file."
-    );
+    throw new Error("FINNHUB_API_KEY is not set. Please add it to your .env.local file.");
   }
   return key;
 }
 
 interface FinnhubQuoteResponse {
-  c: number;   // Current price
-  d: number;   // Change
-  dp: number;  // Percent change
-  h: number;   // High
-  l: number;   // Low
-  o: number;   // Open
-  pc: number;  // Previous close
-  t: number;   // Timestamp
+  c: number; // Current price
+  d: number; // Change
+  dp: number; // Percent change
+  h: number; // High
+  l: number; // Low
+  o: number; // Open
+  pc: number; // Previous close
+  t: number; // Timestamp
 }
 
 /**

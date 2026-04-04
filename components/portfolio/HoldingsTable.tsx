@@ -62,114 +62,120 @@ export const HoldingsTable = ({
 
   return (
     <>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Ticker</TableHead>
-          <TableHead className="text-right">Shares</TableHead>
-          <TableHead className="text-right">Avg Cost</TableHead>
-          <TableHead className="text-right">Price</TableHead>
-          <TableHead className="text-right">Market Value</TableHead>
-          <TableHead className="text-right">P&amp;L</TableHead>
-          <TableHead className="w-12" />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {holdings.map((holding) => {
-          const quote = quoteMap.get(holding.ticker);
-          const shares = parseFloat(holding.shares);
-          const avgCost = parseFloat(holding.avgCost);
-          const currentPrice = quote?.price ?? 0;
-          const marketValue = shares * currentPrice;
-          const costBasis = shares * avgCost;
-          const pnlDollar = marketValue - costBasis;
-          const pnlPercent = costBasis > 0 ? (pnlDollar / costBasis) * 100 : 0;
-          const isPositive = pnlPercent >= 0;
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Ticker</TableHead>
+            <TableHead className="text-right">Shares</TableHead>
+            <TableHead className="text-right">Avg Cost</TableHead>
+            <TableHead className="text-right">Price</TableHead>
+            <TableHead className="text-right">Market Value</TableHead>
+            <TableHead className="text-right">P&amp;L</TableHead>
+            <TableHead className="w-12" />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {holdings.map((holding) => {
+            const quote = quoteMap.get(holding.ticker);
+            const shares = parseFloat(holding.shares);
+            const avgCost = parseFloat(holding.avgCost);
+            const currentPrice = quote?.price ?? 0;
+            const marketValue = shares * currentPrice;
+            const costBasis = shares * avgCost;
+            const pnlDollar = marketValue - costBasis;
+            const pnlPercent = costBasis > 0 ? (pnlDollar / costBasis) * 100 : 0;
+            const isPositive = pnlPercent >= 0;
 
-          return (
-            <TableRow key={holding.id}>
-              <TableCell className="font-medium">
-                <div className="flex items-center gap-3">
-                  <span>{holding.ticker}</span>
-                  {!quotesLoading && quote && (
-                    <SparklineCell ticker={holding.ticker} />
+            return (
+              <TableRow key={holding.id}>
+                <TableCell className="font-medium">
+                  <div className="flex items-center gap-3">
+                    <span>{holding.ticker}</span>
+                    {!quotesLoading && quote && <SparklineCell ticker={holding.ticker} />}
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">
+                  {parseFloat(holding.shares).toLocaleString()}
+                </TableCell>
+                <TableCell className="text-right">{formatCurrency(avgCost)}</TableCell>
+                <TableCell className="text-right">
+                  {quotesLoading ? (
+                    <Skeleton className="h-4 w-16 ml-auto" />
+                  ) : quote ? (
+                    <span>{formatCurrency(quote.price)}</span>
+                  ) : (
+                    <span className="text-muted-foreground">—</span>
                   )}
-                </div>
-              </TableCell>
-              <TableCell className="text-right">{parseFloat(holding.shares).toLocaleString()}</TableCell>
-              <TableCell className="text-right">{formatCurrency(avgCost)}</TableCell>
-              <TableCell className="text-right">
-                {quotesLoading ? (
-                  <Skeleton className="h-4 w-16 ml-auto" />
-                ) : quote ? (
-                  <span>{formatCurrency(quote.price)}</span>
-                ) : (
-                  <span className="text-muted-foreground">—</span>
-                )}
-              </TableCell>
-              <TableCell className="text-right">
-                {quotesLoading ? (
-                  <Skeleton className="h-4 w-20 ml-auto" />
-                ) : (
-                  formatCurrency(marketValue)
-                )}
-              </TableCell>
-              <TableCell className="text-right">
-                {quotesLoading ? (
-                  <Skeleton className="h-4 w-20 ml-auto" />
-                ) : (
-                  <span className={`ml-auto font-mono ${isPositive ? "badge-gain" : "badge-loss"}`}>
-                    {formatPercent(pnlPercent)}
-                  </span>
-                )}
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                  onClick={() => setPendingDelete(holding)}
-                  disabled={deleting === holding.id}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+                </TableCell>
+                <TableCell className="text-right">
+                  {quotesLoading ? (
+                    <Skeleton className="h-4 w-20 ml-auto" />
+                  ) : (
+                    formatCurrency(marketValue)
+                  )}
+                </TableCell>
+                <TableCell className="text-right">
+                  {quotesLoading ? (
+                    <Skeleton className="h-4 w-20 ml-auto" />
+                  ) : (
+                    <span
+                      className={`ml-auto font-mono ${isPositive ? "badge-gain" : "badge-loss"}`}
+                    >
+                      {formatPercent(pnlPercent)}
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                    onClick={() => setPendingDelete(holding)}
+                    disabled={deleting === holding.id}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
 
-    <Dialog
-      open={!!pendingDelete}
-      onOpenChange={(open) => { if (!open) setPendingDelete(null); }}
-    >
-      <DialogContent showCloseButton={false}>
-        <DialogHeader>
-          <DialogTitle>Remove holding</DialogTitle>
-          <DialogDescription>
-            Remove <span className="font-medium text-foreground">{pendingDelete?.ticker}</span> from your portfolio? This cannot be undone.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setPendingDelete(null)}>
-            Cancel
-          </Button>
-          <Button
-            variant="destructive"
-            disabled={deleting === pendingDelete?.id}
-            onClick={() => {
-              if (pendingDelete) {
-                onDelete(pendingDelete.id);
-                setPendingDelete(null);
-              }
-            }}
-          >
-            {deleting === pendingDelete?.id ? "Removing…" : "Proceed"}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      <Dialog
+        open={!!pendingDelete}
+        onOpenChange={(open) => {
+          if (!open) setPendingDelete(null);
+        }}
+      >
+        <DialogContent showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Remove holding</DialogTitle>
+            <DialogDescription>
+              Remove{" "}
+              <span className="font-medium text-foreground">{pendingDelete?.ticker}</span>{" "}
+              from your portfolio? This cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPendingDelete(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={deleting === pendingDelete?.id}
+              onClick={() => {
+                if (pendingDelete) {
+                  onDelete(pendingDelete.id);
+                  setPendingDelete(null);
+                }
+              }}
+            >
+              {deleting === pendingDelete?.id ? "Removing…" : "Proceed"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

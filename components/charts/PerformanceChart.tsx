@@ -39,9 +39,7 @@ function generatePortfolioHistory(
       const currentPrice = quoteMap.get(holding.ticker)?.price ?? 0;
       const shares = parseFloat(holding.shares);
       // Approximate past price with sinusoidal noise per ticker
-      const seed = holding.ticker
-        .split("")
-        .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+      const seed = holding.ticker.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
       const noise =
         Math.sin((dayIndex + seed) * 0.5) * 0.03 +
         Math.cos(dayIndex * 0.3 + seed * 0.1) * 0.015;

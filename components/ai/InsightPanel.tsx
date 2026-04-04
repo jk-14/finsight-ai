@@ -78,9 +78,7 @@ export const InsightPanel = ({ portfolioId }: Props) => {
             disabled={generating}
             className="gap-1.5"
           >
-            <RefreshCw
-              className={`h-3.5 w-3.5 ${generating ? "animate-spin" : ""}`}
-            />
+            <RefreshCw className={`h-3.5 w-3.5 ${generating ? "animate-spin" : ""}`} />
             {insight ? "Regenerate" : "Generate"}
           </Button>
         </div>
@@ -118,7 +116,8 @@ export const InsightPanel = ({ portfolioId }: Props) => {
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            No insight yet. Click &ldquo;Generate&rdquo; to get Claude&apos;s analysis of your portfolio.
+            No insight yet. Click &ldquo;Generate&rdquo; to get Claude&apos;s analysis of
+            your portfolio.
           </p>
         )}
       </CardContent>

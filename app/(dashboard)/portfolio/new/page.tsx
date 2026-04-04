@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function NewPortfolioPage() {
   const router = useRouter();
@@ -79,11 +85,7 @@ export default function NewPortfolioPage() {
               <Button type="submit" disabled={loading}>
                 {loading ? "Creating…" : "Create portfolio"}
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => router.back()}
-              >
+              <Button type="button" variant="ghost" onClick={() => router.back()}>
                 Cancel
               </Button>
             </div>

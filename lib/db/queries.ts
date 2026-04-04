@@ -5,20 +5,12 @@ import { users, portfolios, holdings, aiInsights } from "./schema";
 // ─── Users ───────────────────────────────────────────────────────────────────
 
 export async function getUserByEmail(email: string) {
-  const result = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
   return result[0] ?? null;
 }
 
 export async function getUserById(id: string) {
-  const result = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, id))
-    .limit(1);
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
   return result[0] ?? null;
 }
 
@@ -42,11 +34,7 @@ export async function getPortfoliosByUserId(userId: string) {
 }
 
 export async function getPortfolioById(id: string) {
-  const result = await db
-    .select()
-    .from(portfolios)
-    .where(eq(portfolios.id, id))
-    .limit(1);
+  const result = await db.select().from(portfolios).where(eq(portfolios.id, id)).limit(1);
   return result[0] ?? null;
 }
 
@@ -62,10 +50,7 @@ export async function getPortfolioWithHoldings(portfolioId: string) {
   return { ...portfolio, holdings: portfolioHoldings };
 }
 
-export async function createPortfolio(data: {
-  userId: string;
-  name: string;
-}) {
+export async function createPortfolio(data: { userId: string; name: string }) {
   const result = await db.insert(portfolios).values(data).returning();
   return result[0];
 }
@@ -119,10 +104,7 @@ export async function getLatestInsight(portfolioId: string) {
   return result[0] ?? null;
 }
 
-export async function saveInsight(data: {
-  portfolioId: string;
-  content: string;
-}) {
+export async function saveInsight(data: { portfolioId: string; content: string }) {
   const result = await db.insert(aiInsights).values(data).returning();
   return result[0];
 }

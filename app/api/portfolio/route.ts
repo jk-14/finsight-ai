@@ -19,10 +19,7 @@ export async function POST(req: NextRequest) {
     const { name } = body as { name: string };
 
     if (!name?.trim()) {
-      return NextResponse.json(
-        { error: "Portfolio name is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Portfolio name is required" }, { status: 400 });
     }
 
     const portfolio = await createPortfolio({
@@ -33,9 +30,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: portfolio }, { status: 201 });
   } catch {
     console.error("[POST /api/portfolio]");
-    return NextResponse.json(
-      { error: "Failed to create portfolio" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to create portfolio" }, { status: 500 });
   }
 }
