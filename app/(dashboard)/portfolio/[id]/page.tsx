@@ -201,7 +201,7 @@ export default function PortfolioDetailPage() {
       </div>
 
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg top-[25%] translate-y-0">
           <DialogHeader>
             <DialogTitle>Add holding</DialogTitle>
             <DialogDescription>
