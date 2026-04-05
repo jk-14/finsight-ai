@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthUser, Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export const TopNav = () => {
   const pathname = usePathname();
@@ -45,16 +46,37 @@ export const TopNav = () => {
         )}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center">
         {meLoading ? (
-          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-8 w-8 rounded-full" />
         ) : user ? (
-          <>
-            <span className="text-sm text-muted-foreground">{user.email}</span>
-            <Badge variant="outline" className="text-xs capitalize">
-              {user.role}
-            </Badge>
-          </>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <Avatar className="h-8 w-8 cursor-pointer">
+                  <AvatarFallback className="text-xs font-semibold bg-primary text-primary-foreground">
+                    {user.email.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-56 p-4 space-y-3">
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
+                  Signed in as
+                </p>
+                <p className="text-sm font-medium truncate">{user.email}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
+                  Role
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
+                  {user.role}
+                </span>
+              </div>
+            </PopoverContent>
+          </Popover>
         ) : null}
       </div>
     </header>
