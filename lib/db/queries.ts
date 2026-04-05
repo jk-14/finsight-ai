@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import { db } from "./index";
 import { users, portfolios, holdings, aiInsights } from "./schema";
 
@@ -74,6 +74,15 @@ export async function addHolding(data: {
       ticker: data.ticker.toUpperCase(),
       shares: String(data.shares),
       avgCost: String(data.avgCost),
+    })
+    .onConflictDoUpdate({
+      target: [holdings.portfolioId, holdings.ticker],
+      // Merge: accumulate shares, recalculate weighted average cost.
+      // weighted_avg = (old_shares * old_avg + new_shares * new_avg) / (old_shares + new_shares)
+      set: {
+        shares: sql`holdings.shares + excluded.shares`,
+        avgCost: sql`(holdings.shares * holdings.avg_cost + excluded.shares * excluded.avg_cost) / (holdings.shares + excluded.shares)`,
+      },
     })
     .returning();
   return result[0];

@@ -1,4 +1,12 @@
-import { pgTable, uuid, varchar, text, timestamp, numeric } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  uuid,
+  varchar,
+  text,
+  timestamp,
+  numeric,
+  unique,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -17,16 +25,26 @@ export const portfolios = pgTable("portfolios", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const holdings = pgTable("holdings", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  portfolioId: uuid("portfolio_id")
-    .notNull()
-    .references(() => portfolios.id, { onDelete: "cascade" }),
-  ticker: varchar("ticker", { length: 10 }).notNull(), // e.g. 'AAPL'
-  shares: numeric("shares", { precision: 10, scale: 4 }).notNull(),
-  avgCost: numeric("avg_cost", { precision: 10, scale: 2 }).notNull(), // price paid per share
-  addedAt: timestamp("added_at").defaultNow(),
-});
+export const holdings = pgTable(
+  "holdings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    portfolioId: uuid("portfolio_id")
+      .notNull()
+      .references(() => portfolios.id, { onDelete: "cascade" }),
+    ticker: varchar("ticker", { length: 10 }).notNull(), // e.g. 'AAPL'
+    shares: numeric("shares", { precision: 10, scale: 4 }).notNull(),
+    avgCost: numeric("avg_cost", { precision: 10, scale: 2 }).notNull(), // price paid per share
+    addedAt: timestamp("added_at").defaultNow(),
+  },
+  (table) => ({
+    // One row per ticker per portfolio — duplicate adds merge into the existing row.
+    portfolioTickerUnique: unique("holdings_portfolio_ticker_unique").on(
+      table.portfolioId,
+      table.ticker
+    ),
+  })
+);
 
 export const aiInsights = pgTable("ai_insights", {
   id: uuid("id").defaultRandom().primaryKey(),

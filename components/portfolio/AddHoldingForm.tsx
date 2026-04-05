@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { TickerSearch } from "@/components/portfolio/TickerSearch";
 
@@ -20,7 +21,6 @@ export const AddHoldingForm = ({
   const [ticker, setTicker] = useState("");
   const [shares, setShares] = useState("");
   const [avgCost, setAvgCost] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const setLoadingState = (val: boolean) => {
@@ -30,7 +30,6 @@ export const AddHoldingForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setLoadingState(true);
 
     try {
@@ -50,17 +49,21 @@ export const AddHoldingForm = ({
 
       const json = await res.json();
       if (!res.ok) {
-        setError(json.error ?? "Failed to add holding");
+        toast.error(json.error ?? "Failed to add holding");
         return;
       }
 
+      const t = ticker.trim().toUpperCase();
+      toast.success(`${t} added to portfolio`, {
+        description: `${shares} shares @ $${parseFloat(avgCost).toFixed(2)} avg cost`,
+      });
       setTicker("");
       setShares("");
       setAvgCost("");
       onSuccess();
       onClose?.();
     } catch {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoadingState(false);
     }
@@ -68,11 +71,6 @@ export const AddHoldingForm = ({
 
   return (
     <form id="add-holding-form" onSubmit={handleSubmit} className="space-y-5 py-2">
-      {error && (
-        <p className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
-          {error}
-        </p>
-      )}
       <div className="space-y-2">
         <label htmlFor="ticker" className="text-sm font-medium">
           Ticker
