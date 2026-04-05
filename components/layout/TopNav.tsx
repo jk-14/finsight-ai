@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { LogOut } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { fetchWithAuthJson } from "@/lib/auth-client";
 import { useSignOut } from "@/hooks/use-sign-out";
 import { AuthUser, Portfolio } from "@/types";
@@ -11,7 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-export const TopNav = () => {
+interface TopNavProps {
+  onMenuClick: () => void;
+}
+
+export const TopNav = ({ onMenuClick }: TopNavProps) => {
   const pathname = usePathname();
   const queryClient = useQueryClient();
   const signOut = useSignOut();
@@ -35,8 +39,17 @@ export const TopNav = () => {
     : undefined;
 
   return (
-    <header className="h-14 flex items-center justify-between px-6 bg-background sticky top-0 z-10">
-      <div className="flex items-center gap-2 text-sm">
+    <header className="h-14 flex items-center justify-between px-4 md:px-6 bg-background border-b border-border md:border-b-0 sticky top-0 z-10">
+      <div className="flex items-center gap-3 text-sm">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden text-muted-foreground"
+          onClick={onMenuClick}
+          aria-label="Open menu"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
         <span className="text-muted-foreground">Dashboard</span>
         {portfolioName && (
           <>
