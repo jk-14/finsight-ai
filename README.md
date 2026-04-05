@@ -2,7 +2,7 @@
 
 A multi-tenant financial portfolio dashboard with live stock quotes and AI-generated insights — sitting at the intersection of FinTech data processing, SaaS multi-tenancy, and modern AI integration.
 
-**[Live Demo](https://finsight-ai.vercel.app)** · **[View Source](https://github.com/jk-14/finsight-ai)**
+**[Live Demo](https://finsight-ai.vercel.app)**
 
 > Demo credentials: `demo@finsight.ai` / `Demo1234!`
 
@@ -189,20 +189,20 @@ This is a portfolio POC with deliberate scope constraints. In a production syste
 
 ## Tech stack
 
-| Layer        | Technology                                    |
-| ------------ | --------------------------------------------- |
-| Framework    | Next.js 16 (App Router)                       |
-| Language     | TypeScript (strict mode)                      |
-| Database     | Neon Postgres (serverless)                    |
-| ORM          | Drizzle ORM                                   |
-| Cache        | Upstash Redis                                 |
-| Auth         | JWT via `jose`                                |
-| Stock data   | Finnhub API                                   |
-| AI           | Anthropic Claude (`claude-sonnet-4-20250514`) |
-| Server state | TanStack React Query                          |
-| UI           | shadcn/ui + Tailwind CSS                      |
-| Charts       | Recharts                                      |
-| Deployment   | Vercel                                        |
+| Layer        | Technology                 |
+| ------------ | -------------------------- |
+| Framework    | Next.js 16 (App Router)    |
+| Language     | TypeScript (strict mode)   |
+| Database     | Neon Postgres (serverless) |
+| ORM          | Drizzle ORM                |
+| Cache        | Upstash Redis              |
+| Auth         | JWT via `jose`             |
+| Stock data   | Finnhub API                |
+| AI           | Anthropic's Claude SDK     |
+| Server state | TanStack React Query       |
+| UI           | shadcn/ui + Tailwind CSS   |
+| Charts       | Recharts                   |
+| Deployment   | Vercel                     |
 
 ---
 
