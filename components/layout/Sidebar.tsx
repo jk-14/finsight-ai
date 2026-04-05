@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BarChart3, LogOut, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ function fetchWithAuth(url: string) {
 export const Sidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery<{ data: Portfolio[] }>({
     queryKey: ["portfolios"],
@@ -29,6 +30,7 @@ export const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    queryClient.clear();
     router.push("/login");
   };
 

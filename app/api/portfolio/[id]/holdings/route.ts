@@ -48,8 +48,8 @@ export async function POST(
     });
 
     return NextResponse.json({ data: holding }, { status: 201 });
-  } catch {
-    console.error("[POST /api/portfolio/[id]/holdings]");
+  } catch (err) {
+    console.error("[POST /api/portfolio/[id]/holdings]", err);
     return NextResponse.json({ error: "Failed to add holding" }, { status: 500 });
   }
 }

@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ data: portfolio }, { status: 201 });
-  } catch {
-    console.error("[POST /api/portfolio]");
+  } catch (err) {
+    console.error("[POST /api/portfolio]", err);
     return NextResponse.json({ error: "Failed to create portfolio" }, { status: 500 });
   }
 }

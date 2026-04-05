@@ -37,8 +37,8 @@ export async function POST(req: NextRequest) {
         user: { id: user.id, email: user.email, role: user.role },
       },
     });
-  } catch {
-    console.error("[POST /api/auth/login]");
+  } catch (err) {
+    console.error("[POST /api/auth/login]", err);
     return NextResponse.json(
       { error: "Login failed. Please try again." },
       { status: 500 }

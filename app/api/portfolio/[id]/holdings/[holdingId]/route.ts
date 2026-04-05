@@ -26,8 +26,8 @@ export async function DELETE(
 
     await deleteHolding(holdingId);
     return NextResponse.json({ data: { success: true } });
-  } catch {
-    console.error("[DELETE /api/portfolio/[id]/holdings/[holdingId]]");
+  } catch (err) {
+    console.error("[DELETE /api/portfolio/[id]/holdings/[holdingId]]", err);
     return NextResponse.json({ error: "Failed to delete holding" }, { status: 500 });
   }
 }

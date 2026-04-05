@@ -78,8 +78,8 @@ export async function POST(
         generatedAt: saved.generatedAt?.toISOString() ?? null,
       },
     });
-  } catch {
-    console.error("[POST /api/ai-insights/[portfolioId]]");
+  } catch (err) {
+    console.error("[POST /api/ai-insights/[portfolioId]]", err);
     return NextResponse.json({ error: "Failed to generate insight" }, { status: 500 });
   }
 }

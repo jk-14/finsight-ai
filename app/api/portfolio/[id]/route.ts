@@ -49,8 +49,8 @@ export async function DELETE(
 
     await deletePortfolio(id);
     return NextResponse.json({ data: { success: true } });
-  } catch {
-    console.error("[DELETE /api/portfolio/[id]]");
+  } catch (err) {
+    console.error("[DELETE /api/portfolio/[id]]", err);
     return NextResponse.json({ error: "Failed to delete portfolio" }, { status: 500 });
   }
 }
