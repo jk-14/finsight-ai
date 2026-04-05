@@ -22,7 +22,7 @@ export const AddHoldingForm = ({
   const [ticker, setTicker] = useState("");
   const [shares, setShares] = useState("");
   const [avgCost, setAvgCost] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const setLoadingState = (val: boolean) => {
     setLoading(val);

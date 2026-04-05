@@ -13,7 +13,7 @@ import { AllocationChart } from "@/components/portfolio/AllocationChart";
 import { PerformanceChart } from "@/components/charts/PerformanceChart";
 import { InsightPanel } from "@/components/ai/InsightPanel";
 import { Skeleton } from "@/components/ui/skeleton";
-import { fetchWithAuth, fetchWithAuthJson } from "@/lib/auth-client";
+import { fetchWithAuthJson } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

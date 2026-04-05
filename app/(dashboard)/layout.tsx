@@ -19,6 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   // Close sidebar whenever the route changes (user tapped a nav link)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
   }, [pathname]);
 
