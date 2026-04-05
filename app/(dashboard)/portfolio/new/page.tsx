@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,12 +18,10 @@ export default function NewPortfolioPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
 
     try {
@@ -39,14 +38,15 @@ export default function NewPortfolioPage() {
       const json = await res.json();
 
       if (!res.ok) {
-        setError(json.error ?? "Failed to create portfolio");
+        toast.error(json.error ?? "Failed to create portfolio.");
         return;
       }
 
+      toast.success(`"${name.trim()}" created successfully.`);
       await queryClient.invalidateQueries({ queryKey: ["portfolios"] });
       router.push(`/portfolio/${json.data.id}`);
     } catch {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -63,11 +63,6 @@ export default function NewPortfolioPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <p className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
-                {error}
-              </p>
-            )}
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">
                 Portfolio name

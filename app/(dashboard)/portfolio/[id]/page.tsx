@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Plus, RefreshCw, Trash2 } from "lucide-react";
 import { PortfolioWithHoldings, Quote } from "@/types";
 import { PnLSummaryCard } from "@/components/portfolio/PnLSummaryCard";
@@ -68,10 +69,17 @@ export default function PortfolioDetailPage() {
   const handleDeleteHolding = async (holdingId: string) => {
     setDeleting(holdingId);
     try {
-      await authFetch(`/api/portfolio/${id}/holdings/${holdingId}`, {
+      const res = await authFetch(`/api/portfolio/${id}/holdings/${holdingId}`, {
         method: "DELETE",
       });
+      if (res?.error) {
+        toast.error(res.error ?? "Failed to remove holding.");
+        return;
+      }
       await queryClient.invalidateQueries({ queryKey: ["portfolio", id] });
+      toast.success("Holding removed.");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setDeleting(null);
     }
@@ -80,9 +88,16 @@ export default function PortfolioDetailPage() {
   const handleDeletePortfolio = async () => {
     setDeletingPortfolio(true);
     try {
-      await authFetch(`/api/portfolio/${id}`, { method: "DELETE" });
+      const res = await authFetch(`/api/portfolio/${id}`, { method: "DELETE" });
+      if (res?.error) {
+        toast.error(res.error ?? "Failed to delete portfolio.");
+        return;
+      }
+      toast.success(`"${portfolio?.name}" deleted.`);
       await queryClient.invalidateQueries({ queryKey: ["portfolios"] });
       router.push("/dashboard");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setDeletingPortfolio(false);
     }

@@ -1,4 +1,4 @@
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, asc, sql } from "drizzle-orm";
 import { db } from "./index";
 import { users, portfolios, holdings, aiInsights } from "./schema";
 
@@ -30,7 +30,7 @@ export async function getPortfoliosByUserId(userId: string) {
     .select()
     .from(portfolios)
     .where(eq(portfolios.userId, userId))
-    .orderBy(desc(portfolios.createdAt));
+    .orderBy(asc(portfolios.createdAt));
 }
 
 export async function getPortfolioById(id: string) {

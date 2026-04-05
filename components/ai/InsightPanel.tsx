@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Sparkles, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { InsightSkeleton } from "./InsightSkeleton";
 
 interface InsightData {
@@ -16,6 +17,32 @@ interface InsightData {
 
 interface Props {
   portfolioId: string;
+}
+
+function renderInsight(text: string) {
+  const paragraphs = text.split(/\n\n+/).filter(Boolean);
+  return paragraphs.map((para, i) => {
+    // Match **Heading:** body  or  **Heading** body
+    const match = para.match(/^\*\*(.+?)\*\*:?\s*([\s\S]*)/);
+    if (match) {
+      const [, heading, body] = match;
+      return (
+        <div key={i} className="space-y-1">
+          <p className="text-sm font-semibold text-foreground">{heading}</p>
+          {body.trim() && (
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {body.trim()}
+            </p>
+          )}
+        </div>
+      );
+    }
+    return (
+      <p key={i} className="text-sm text-muted-foreground leading-relaxed">
+        {para.trim()}
+      </p>
+    );
+  });
 }
 
 export const InsightPanel = ({ portfolioId }: Props) => {
@@ -92,18 +119,24 @@ export const InsightPanel = ({ portfolioId }: Props) => {
         )}
 
         {generating ? (
-          <div className="space-y-2">
-            <div className="h-4 w-full bg-muted rounded animate-pulse" />
-            <div className="h-4 w-full bg-muted rounded animate-pulse" />
-            <div className="h-4 w-5/6 bg-muted rounded animate-pulse" />
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Sparkles className="h-3.5 w-3.5 text-primary animate-pulse" />
+              <span>Claude is analyzing your portfolio&hellip;</span>
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-4/6" />
+            </div>
           </div>
         ) : insight ? (
-          <div className="space-y-1">
-            <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
-              {insight}
-            </p>
+          <div className="space-y-3">
+            {renderInsight(insight)}
             {generatedAt && (
-              <p className="text-xs text-muted-foreground pt-2">
+              <p className="text-xs text-muted-foreground pt-1">
                 Generated{" "}
                 {new Date(generatedAt).toLocaleString("en-US", {
                   month: "short",
