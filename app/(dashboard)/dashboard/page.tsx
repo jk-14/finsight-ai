@@ -5,18 +5,14 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchWithAuthJson } from "@/lib/auth-client";
 
 export default function DashboardRootPage() {
   const router = useRouter();
 
   const { data, isLoading } = useQuery<{ data: Portfolio[] }>({
     queryKey: ["portfolios"],
-    queryFn: () => {
-      const token = localStorage.getItem("token");
-      return fetch("/api/portfolio", {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((r) => r.json());
-    },
+    queryFn: () => fetchWithAuthJson("/api/portfolio"),
   });
 
   useEffect(() => {

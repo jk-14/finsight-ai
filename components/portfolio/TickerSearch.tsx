@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { fetchWithAuthJson } from "@/lib/auth-client";
 import {
   Combobox,
   ComboboxContent,
@@ -26,13 +27,6 @@ function useDebounce(value: string, delay: number): string {
   return debounced;
 }
 
-function fetchWithAuth(url: string) {
-  const token = localStorage.getItem("token");
-  return fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((r) =>
-    r.json()
-  );
-}
-
 export const TickerSearch = ({ value, onSelect }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -41,7 +35,8 @@ export const TickerSearch = ({ value, onSelect }: Props) => {
 
   const { data, isFetching } = useQuery<{ data: TickerEntry[] }>({
     queryKey: ["tickers", debouncedQuery],
-    queryFn: () => fetchWithAuth(`/api/tickers?q=${encodeURIComponent(debouncedQuery)}`),
+    queryFn: () =>
+      fetchWithAuthJson(`/api/tickers?q=${encodeURIComponent(debouncedQuery)}`),
     enabled: debouncedQuery.trim().length >= 1,
     staleTime: 60 * 1000,
   });

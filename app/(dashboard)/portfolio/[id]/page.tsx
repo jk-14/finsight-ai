@@ -13,6 +13,7 @@ import { AllocationChart } from "@/components/portfolio/AllocationChart";
 import { PerformanceChart } from "@/components/charts/PerformanceChart";
 import { InsightPanel } from "@/components/ai/InsightPanel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchWithAuth, fetchWithAuthJson } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,17 +24,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-function authFetch(url: string, options?: RequestInit) {
-  const token = localStorage.getItem("token");
-  return fetch(url, {
-    ...options,
-    headers: {
-      ...options?.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((r) => r.json());
-}
 
 export default function PortfolioDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -48,7 +38,7 @@ export default function PortfolioDetailPage() {
     data: PortfolioWithHoldings;
   }>({
     queryKey: ["portfolio", id],
-    queryFn: () => authFetch(`/api/portfolio/${id}`),
+    queryFn: () => fetchWithAuthJson(`/api/portfolio/${id}`),
     enabled: !!id,
   });
 
@@ -59,7 +49,7 @@ export default function PortfolioDetailPage() {
     data: Quote[];
   }>({
     queryKey: ["quotes", tickers.join(",")],
-    queryFn: () => authFetch(`/api/quotes?tickers=${tickers.join(",")}`),
+    queryFn: () => fetchWithAuthJson(`/api/quotes?tickers=${tickers.join(",")}`),
     enabled: tickers.length > 0,
     refetchInterval: 60_000, // Re-fetch live quotes every 60s
   });
@@ -69,7 +59,7 @@ export default function PortfolioDetailPage() {
   const handleDeleteHolding = async (holdingId: string) => {
     setDeleting(holdingId);
     try {
-      const res = await authFetch(`/api/portfolio/${id}/holdings/${holdingId}`, {
+      const res = await fetchWithAuthJson(`/api/portfolio/${id}/holdings/${holdingId}`, {
         method: "DELETE",
       });
       if (res?.error) {
@@ -88,7 +78,7 @@ export default function PortfolioDetailPage() {
   const handleDeletePortfolio = async () => {
     setDeletingPortfolio(true);
     try {
-      const res = await authFetch(`/api/portfolio/${id}`, { method: "DELETE" });
+      const res = await fetchWithAuthJson(`/api/portfolio/${id}`, { method: "DELETE" });
       if (res?.error) {
         toast.error(res.error ?? "Failed to delete portfolio.");
         return;

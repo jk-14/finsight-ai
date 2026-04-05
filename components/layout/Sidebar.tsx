@@ -1,38 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { BarChart3, LogOut, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Portfolio } from "@/types";
-
-function fetchWithAuth(url: string) {
-  const token = localStorage.getItem("token");
-  return fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  }).then((r) => r.json());
-}
+import { fetchWithAuthJson } from "@/lib/auth-client";
+import { useSignOut } from "@/hooks/use-sign-out";
 
 export const Sidebar = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const signOut = useSignOut();
 
   const { data, isLoading } = useQuery<{ data: Portfolio[] }>({
     queryKey: ["portfolios"],
-    queryFn: () => fetchWithAuth("/api/portfolio"),
+    queryFn: () => fetchWithAuthJson("/api/portfolio"),
   });
 
   const portfolios = data?.data ?? [];
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    queryClient.clear();
-    router.push("/login");
-  };
 
   return (
     <aside className="flex flex-col w-60 shrink-0 border-r border-border bg-card h-screen sticky top-0">
@@ -93,7 +81,7 @@ export const Sidebar = () => {
           variant="ghost"
           size="sm"
           className="w-full justify-start gap-2 text-muted-foreground"
-          onClick={handleLogout}
+          onClick={signOut}
         >
           <LogOut className="h-4 w-4" />
           Sign out

@@ -1,8 +1,10 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
+import { fetchWithAuthJson } from "@/lib/auth-client";
+import { useSignOut } from "@/hooks/use-sign-out";
 import { AuthUser, Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -11,23 +13,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export const TopNav = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const queryClient = useQueryClient();
-
-  const handleSignOut = () => {
-    localStorage.removeItem("token");
-    queryClient.clear();
-    router.push("/login");
-  };
+  const signOut = useSignOut();
 
   const { data: meData, isLoading: meLoading } = useQuery<{ data: { user: AuthUser } }>({
     queryKey: ["me"],
-    queryFn: () => {
-      const token = localStorage.getItem("token");
-      return fetch("/api/auth/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((r) => r.json());
-    },
+    queryFn: () => fetchWithAuthJson("/api/auth/me"),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -82,7 +73,7 @@ export const TopNav = () => {
                   variant="ghost"
                   size="sm"
                   className="w-full justify-start gap-2 text-muted-foreground"
-                  onClick={handleSignOut}
+                  onClick={signOut}
                 >
                   <LogOut className="h-4 w-4" />
                   Sign out

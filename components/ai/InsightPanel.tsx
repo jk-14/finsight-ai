@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchWithAuth, fetchWithAuthJson } from "@/lib/auth-client";
 import { Sparkles, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -50,12 +51,7 @@ export const InsightPanel = ({ portfolioId }: Props) => {
 
   const { data, isLoading } = useQuery<InsightData>({
     queryKey: ["insight", portfolioId],
-    queryFn: () => {
-      const token = localStorage.getItem("token");
-      return fetch(`/api/ai-insights/${portfolioId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((r) => r.json());
-    },
+    queryFn: () => fetchWithAuthJson(`/api/ai-insights/${portfolioId}`),
   });
 
   const insight = data?.data?.insight;
@@ -66,10 +62,8 @@ export const InsightPanel = ({ portfolioId }: Props) => {
     setGenError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`/api/ai-insights/${portfolioId}`, {
+      const res = await fetchWithAuth(`/api/ai-insights/${portfolioId}`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
       });
 
       const json = await res.json();

@@ -21,21 +21,25 @@ export async function POST(
 
     const body = await req.json();
     const { ticker, shares, avgCost } = body as {
-      ticker: string;
-      shares: number;
-      avgCost: number;
+      ticker: unknown;
+      shares: unknown;
+      avgCost: unknown;
     };
 
-    if (!ticker?.trim() || !shares || !avgCost) {
+    if (!ticker || typeof ticker !== "string" || !ticker.trim()) {
+      return NextResponse.json({ error: "ticker is required" }, { status: 400 });
+    }
+
+    if (typeof shares !== "number" || isNaN(shares) || shares <= 0) {
       return NextResponse.json(
-        { error: "ticker, shares, and avgCost are required" },
+        { error: "shares must be a positive number" },
         { status: 400 }
       );
     }
 
-    if (shares <= 0 || avgCost <= 0) {
+    if (typeof avgCost !== "number" || isNaN(avgCost) || avgCost <= 0) {
       return NextResponse.json(
-        { error: "shares and avgCost must be positive numbers" },
+        { error: "avgCost must be a positive number" },
         { status: 400 }
       );
     }

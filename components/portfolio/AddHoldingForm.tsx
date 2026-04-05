@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { fetchWithAuth } from "@/lib/auth-client";
 import { Input } from "@/components/ui/input";
 import { TickerSearch } from "@/components/portfolio/TickerSearch";
 
@@ -33,13 +34,9 @@ export const AddHoldingForm = ({
     setLoadingState(true);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`/api/portfolio/${portfolioId}/holdings`, {
+      const res = await fetchWithAuth(`/api/portfolio/${portfolioId}/holdings`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ticker: ticker.trim().toUpperCase(),
           shares: parseFloat(shares),
