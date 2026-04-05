@@ -2,7 +2,7 @@
 
 A multi-tenant financial portfolio dashboard with live stock quotes and AI-generated insights — sitting at the intersection of FinTech data processing, SaaS multi-tenancy, and modern AI integration.
 
-**[Live Demo](https://finsight-ai.vercel.app)**
+**[Live Demo](https://finsight-ai-xi-sandy.vercel.app)**
 
 > Demo credentials: `demo@finsight.ai` / `Demo1234!`
 

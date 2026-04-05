@@ -48,7 +48,7 @@ export const DashboardPreview = () => {
           <span className="h-3 w-3 rounded-full bg-yellow-400/80" />
           <span className="h-3 w-3 rounded-full bg-green-400/80" />
           <div className="ml-2 flex-1 bg-background/70 rounded-md px-3 py-1 text-xs text-muted-foreground font-mono truncate">
-            finsight-ai.vercel.app/portfolio
+            finsight-ai-xi-sandy.vercel.app/portfolio
           </div>
         </div>
 
