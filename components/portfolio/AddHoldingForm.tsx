@@ -54,8 +54,9 @@ export const AddHoldingForm = ({
       }
 
       const t = ticker.trim().toUpperCase();
+      const sharesNum = parseFloat(shares);
       toast.success(`${t} added to portfolio`, {
-        description: `${shares} shares @ $${parseFloat(avgCost).toFixed(2)} avg cost`,
+        description: `${sharesNum} ${sharesNum === 1 ? "share" : "shares"} @ $${parseFloat(avgCost).toFixed(2)} avg cost`,
       });
       setTicker("");
       setShares("");

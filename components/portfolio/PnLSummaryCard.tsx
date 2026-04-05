@@ -63,7 +63,7 @@ export const PnLSummaryCard = ({ holdings, quotes, loading }: Props) => {
             <CardTitle className="text-sm font-medium text-muted-foreground">
               {label}
             </CardTitle>
-            <Icon className={`h-4 w-4 ${color}`} />
+            <Icon className={`h-5 w-5 ${color}`} />
           </CardHeader>
           <CardContent>
             {loading ? (

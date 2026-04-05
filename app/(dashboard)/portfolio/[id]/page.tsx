@@ -134,10 +134,6 @@ export default function PortfolioDetailPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">{portfolio.name}</h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {portfolio.holdings.length} holding
-            {portfolio.holdings.length !== 1 ? "s" : ""}
-          </p>
         </div>
         <div className="flex items-center gap-1">
           <Button
@@ -197,7 +193,12 @@ export default function PortfolioDetailPage() {
 
       {/* Your holdings */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Your holdings</h2>
+        <h2 className="text-lg font-semibold">
+          Your holdings{" "}
+          <span className="text-muted-foreground font-normal">
+            ({portfolio.holdings.length})
+          </span>
+        </h2>
         <Button size="sm" className="gap-1.5" onClick={() => setAddOpen(true)}>
           <Plus className="h-4 w-4" />
           Add holding
