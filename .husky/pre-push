@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "Running pre-push checks..."
+
+echo "\n→ Type checking..."
+npx tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "\n✗ Type check failed. Push aborted."
+  exit 1
+fi
+
+echo "\n→ Linting..."
+npx eslint . --max-warnings=0
+if [ $? -ne 0 ]; then
+  echo "\n✗ Lint failed. Push aborted."
+  exit 1
+fi
+
+echo "\n✓ All checks passed.\n"
+exit 0

@@ -59,9 +59,12 @@ export default function PortfolioDetailPage() {
   const handleDeleteHolding = async (holdingId: string) => {
     setDeleting(holdingId);
     try {
-      const res = await fetchWithAuthJson(`/api/portfolio/${id}/holdings/${holdingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetchWithAuthJson<{ error?: string }>(
+        `/api/portfolio/${id}/holdings/${holdingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (res?.error) {
         toast.error(res.error ?? "Failed to remove holding.");
         return;
@@ -78,7 +81,9 @@ export default function PortfolioDetailPage() {
   const handleDeletePortfolio = async () => {
     setDeletingPortfolio(true);
     try {
-      const res = await fetchWithAuthJson(`/api/portfolio/${id}`, { method: "DELETE" });
+      const res = await fetchWithAuthJson<{ error?: string }>(`/api/portfolio/${id}`, {
+        method: "DELETE",
+      });
       if (res?.error) {
         toast.error(res.error ?? "Failed to delete portfolio.");
         return;
