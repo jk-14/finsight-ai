@@ -15,6 +15,8 @@ export async function getUserById(id: string) {
 }
 
 export async function createUser(data: {
+  firstName: string;
+  lastName: string;
   email: string;
   passwordHash: string;
   role?: string;

@@ -73,7 +73,10 @@ export const TickerSearch = ({ value, onSelect }: Props) => {
         <ComboboxList>
           {isLoading ? (
             Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center justify-between px-1.5 py-1.5 gap-2">
+              <div
+                key={i}
+                className="flex items-center justify-between px-1.5 py-1.5 gap-2"
+              >
                 <Skeleton className="h-4 w-12" />
                 <Skeleton className="h-4 w-36" />
               </div>

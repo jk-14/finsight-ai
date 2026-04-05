@@ -6,11 +6,16 @@ import { signToken } from "@/lib/auth";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, password } = body as { email: string; password: string };
+    const { firstName, lastName, email, password } = body as {
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+    };
 
-    if (!email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "First name, last name, email and password are required" },
         { status: 400 }
       );
     }
@@ -31,7 +36,12 @@ export async function POST(req: NextRequest) {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = await createUser({ email, passwordHash });
+    const user = await createUser({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email,
+      passwordHash,
+    });
 
     const token = await signToken({
       userId: user.id,
@@ -43,7 +53,13 @@ export async function POST(req: NextRequest) {
       {
         data: {
           token,
-          user: { id: user.id, email: user.email, role: user.role },
+          user: {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+          },
         },
       },
       { status: 201 }

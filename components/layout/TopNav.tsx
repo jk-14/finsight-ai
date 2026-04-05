@@ -51,21 +51,22 @@ export const TopNav = () => {
           <Skeleton className="h-8 w-8 rounded-full" />
         ) : user ? (
           <Popover>
-            <PopoverTrigger asChild>
-              <button className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                <Avatar className="h-8 w-8 cursor-pointer">
-                  <AvatarFallback className="text-xs font-semibold bg-primary text-primary-foreground">
-                    {user.email.slice(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-              </button>
+            <PopoverTrigger
+              nativeButton={false}
+              render={
+                <Avatar className="h-8 w-8 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full" />
+              }
+            >
+              <AvatarFallback className="text-xs font-semibold bg-primary text-primary-foreground">
+                {(user.firstName[0] + user.lastName[0]).toUpperCase()}
+              </AvatarFallback>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-56 p-4 space-y-3">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
-                  Signed in as
+                <p className="text-sm font-semibold">
+                  {user.firstName} {user.lastName}
                 </p>
-                <p className="text-sm font-medium truncate">{user.email}</p>
+                <p className="text-xs text-muted-foreground truncate">{user.email}</p>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-muted-foreground uppercase tracking-wide font-medium">

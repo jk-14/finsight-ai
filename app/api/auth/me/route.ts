@@ -12,7 +12,15 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({
-      data: { user: { id: user.id, email: user.email, role: user.role } },
+      data: {
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+        },
+      },
     });
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

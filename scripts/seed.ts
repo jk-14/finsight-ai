@@ -50,6 +50,8 @@ async function seed() {
   } else {
     const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 12);
     await db.insert(schema.users).values({
+      firstName: "Demo",
+      lastName: "User",
       email: DEMO_EMAIL,
       passwordHash,
       role: "admin",
