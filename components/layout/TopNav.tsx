@@ -1,15 +1,24 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { LogOut } from "lucide-react";
 import { AuthUser, Portfolio } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export const TopNav = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const queryClient = useQueryClient();
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    queryClient.clear();
+    router.push("/login");
+  };
 
   const { data: meData, isLoading: meLoading } = useQuery<{ data: { user: AuthUser } }>({
     queryKey: ["me"],
@@ -61,20 +70,23 @@ export const TopNav = () => {
                 {(user.firstName[0] + user.lastName[0]).toUpperCase()}
               </AvatarFallback>
             </PopoverTrigger>
-            <PopoverContent align="end" className="w-56 p-4 space-y-3">
-              <div className="space-y-1">
+            <PopoverContent align="end" className="w-56 p-0 overflow-hidden">
+              <div className="px-4 py-3 border-border">
                 <p className="text-sm font-semibold">
                   {user.firstName} {user.lastName}
                 </p>
                 <p className="text-xs text-muted-foreground truncate">{user.email}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
-                  Role
-                </span>
-                <span className="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
-                  {user.role}
-                </span>
+              <div className="p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start gap-2 text-muted-foreground"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign out
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
