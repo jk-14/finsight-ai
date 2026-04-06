@@ -6,6 +6,11 @@ A multi-tenant financial portfolio dashboard with live stock quotes and AI-gener
 
 > Demo credentials: `demo@finsight.ai` / `Demo1234!`
 
+![Performance](https://img.shields.io/badge/Lighthouse-Performance%3A%20100-brightgreen?logo=googlechrome&logoColor=white)
+![Accessibility](https://img.shields.io/badge/Lighthouse-Accessibility%3A%2096-brightgreen?logo=googlechrome&logoColor=white)
+![Best Practices](https://img.shields.io/badge/Lighthouse-Best%20Practices%3A%20100-brightgreen?logo=googlechrome&logoColor=white)
+![SEO](https://img.shields.io/badge/Lighthouse-SEO%3A%20100-brightgreen?logo=googlechrome&logoColor=white)
+
 ![FinSight AI Demo](docs/demo.gif)
 
 ---
@@ -170,6 +175,42 @@ The project is zero-config on Vercel. Set the environment variables above in the
 ```bash
 vercel --prod
 ```
+
+---
+
+## Performance
+
+Audited with Lighthouse against the live Vercel deployment (desktop, April 2026).
+
+![Lighthouse scores — 100 Performance, 96 Accessibility, 100 Best Practices, 100 SEO](<docs/lighthouse/Screenshot 2026-04-06 104703.png>)
+
+| Category       | Score     |
+| -------------- | --------- |
+| Performance    | 100 / 100 |
+| Accessibility  | 96 / 100  |
+| Best Practices | 100 / 100 |
+| SEO            | 100 / 100 |
+
+**Core Web Vitals:**
+
+| Metric                         | Value |
+| ------------------------------ | ----- |
+| First Contentful Paint (FCP)   | 0.3 s |
+| Largest Contentful Paint (LCP) | 0.6 s |
+| Total Blocking Time (TBT)      | 0 ms  |
+| Cumulative Layout Shift (CLS)  | 0     |
+| Speed Index                    | 0.3 s |
+| Time to Interactive            | 0.6 s |
+
+Key contributors:
+
+- `next/image` with explicit `sizes` prop — serves mobile-appropriate srcsets instead of full 1440 px images on every viewport
+- `next/font/google` with `display: swap` — eliminates font render-blocking; fallback text visible instantly
+- `experimental.optimizeCss` — inlines critical CSS, removes render-blocking stylesheet request
+- Targeted `browserslist` (Chrome 87+, Safari 14+) — strips ~14 KB of polyfills the modern browser already supports natively
+- Vercel Edge CDN for all static assets — zero origin round-trips for fonts, images, and JS chunks
+
+[Full Lighthouse report](docs/lighthouse/report.html)
 
 ---
 
