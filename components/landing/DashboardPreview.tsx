@@ -61,6 +61,7 @@ export const DashboardPreview = () => {
               alt={tab.alt}
               width={1440}
               height={860}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) calc(100vw - 3rem), 1000px"
               className={cn(
                 "absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300",
                 active === i ? "opacity-100" : "opacity-0"
