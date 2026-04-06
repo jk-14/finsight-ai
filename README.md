@@ -6,6 +6,8 @@ A multi-tenant financial portfolio dashboard with live stock quotes and AI-gener
 
 > Demo credentials: `demo@finsight.ai` / `Demo1234!`
 
+![FinSight AI Demo](docs/demo.gif)
+
 ---
 
 ## What it does
